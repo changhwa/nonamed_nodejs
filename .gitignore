@@ -1,0 +1,8 @@
+nonamed/.grunt/
+nonamed/.idea/
+nonamed/bower_components/
+nonamed/node_modules/
+.classpath
+.project
+nonamed/.classpath
+nonamed/.project

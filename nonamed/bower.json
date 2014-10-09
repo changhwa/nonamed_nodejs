@@ -1,0 +1,15 @@
+{
+  "name": "nonamed",
+  "version": "0.1",
+  "homepage": "https://github.com/teamnonamed/nonamed_nodejs",
+  "authors": [
+    "Changhwa Oh <changhwaoh.co@gmail.com>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
