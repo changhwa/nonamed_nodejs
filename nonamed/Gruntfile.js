@@ -97,6 +97,35 @@ module.exports = function(grunt) {
             },
             mon_debug: {
                 command: 'nodemon --debug bin/www'
+            },
+            sequelize_cli: {
+                /**
+                 * 윈도우에서 bash가 안되서... 편하게 사용하려고 만들었음
+                 * 옵션 : : -> _
+                 * 띄어쓰기는 + 주면 됨
+                 * ex ) 원하는 명령어 : ... db:migration --config config/config.json
+                 * ex ) 실행할 명령어 : grunt seq:db_migrate--config+config/config.json
+                 * TODO : 플러그인 형태로 좀더 쓰기 편하게 확장
+                 */
+                command: function (opts) {
+                    var $commonCmd = 'node_modules/sequelize-cli/bin/sequelize ';
+                    if (opts.indexOf('_') > -1) {
+                        opts = opts.split("--").join(" --");
+                        opts = opts.split("+").join(" ");
+                        var temp = opts.split('_');
+                        var $cmd = "";
+                        for (var i=0; i<temp.length; i++){
+                            $cmd += temp[i];
+                            $cmd += (i!=temp.length-1) ? ":" : "";
+                        }
+                        var $exe = $commonCmd + $cmd;
+                        console.log("Execute >>> " + $exe);
+                        return $exe;
+                    } else {
+                        console.log(" ERROR : Not Found Option");
+                        return false;
+                    }
+                }
             }
         },
 
@@ -188,4 +217,7 @@ module.exports = function(grunt) {
     grunt.registerTask('run', [ 'shell:mon_run']);
     grunt.registerTask('debug', [ 'shell:mon_debug']);
     grunt.registerTask('default', ['clean','test','shell:mon_run']);
+    grunt.registerTask('seq', function (opts) {
+        grunt.task.run('shell:sequelize_cli:' + opts);
+    });
 }
