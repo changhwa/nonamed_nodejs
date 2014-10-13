@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     var $junitResults = $outputDir + '/junit-test-results.xml';
     var $jasmineSpecRunner = $outputDir + '/_SpecRunner.html';
     var $coverageOutputDir = $outputDir + '/coverage';
-
+    var $sequelizeCommonCmd = 'node node_modules/sequelize-cli/bin/sequelize ';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                  * TODO : 플러그인 형태로 좀더 쓰기 편하게 확장
                  */
                 command: function (opts) {
-                    var $commonCmd = 'node node_modules/sequelize-cli/bin/sequelize ';
+
                     if (opts.indexOf('_') > -1) {
                         opts = opts.split("--").join(" --");
                         opts = opts.split("+").join(" ");
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
                             $cmd += temp[i];
                             $cmd += (i!=temp.length-1) ? ":" : "";
                         }
-                        var $exe = $commonCmd + $cmd;
+                        var $exe = $sequelizeCommonCmd + $cmd;
                         console.log("Execute >>> " + $exe);
                         return $exe;
                     } else {
@@ -126,6 +126,9 @@ module.exports = function(grunt) {
                         return false;
                     }
                 }
+            },
+            sequelize_migrate: {
+                command : $sequelizeCommonCmd + 'db:migrate --config src/main/config/config.json'
             }
         },
 
@@ -220,4 +223,5 @@ module.exports = function(grunt) {
     grunt.registerTask('seq', function (opts) {
         grunt.task.run('shell:sequelize_cli:' + opts);
     });
+    grunt.registerTask('migrate',['shell:sequelize_migrate']);
 }
