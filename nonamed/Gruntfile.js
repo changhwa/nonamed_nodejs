@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                  * TODO : 플러그인 형태로 좀더 쓰기 편하게 확장
                  */
                 command: function (opts) {
-                    var $commonCmd = 'node_modules/sequelize-cli/bin/sequelize ';
+                    var $commonCmd = 'node node_modules/sequelize-cli/bin/sequelize ';
                     if (opts.indexOf('_') > -1) {
                         opts = opts.split("--").join(" --");
                         opts = opts.split("+").join(" ");
