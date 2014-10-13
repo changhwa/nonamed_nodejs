@@ -13,6 +13,19 @@ module.exports = function(grunt) {
     var $jasmineSpecRunner = $outputDir + '/_SpecRunner.html';
     var $coverageOutputDir = $outputDir + '/coverage';
     var $sequelizeCommonCmd = 'node node_modules/sequelize-cli/bin/sequelize ';
+    var $sequelizeMigrationCmd = 'db:migrate --config src/main/config/config.json';
+
+    /**
+     * Grunt 스크립트에서 사용할 자체 Replace All 함수
+     * grunt는 독립적으로도 동작해야한다고 생각하므로 util 없이 별도로 만들었음
+     * @param source
+     * @param target
+     * @returns {string}
+     */
+    String.prototype.replaceAll = function(source, target) {
+        var str = this;
+        return str.split(source).join(target);
+    }
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -110,8 +123,7 @@ module.exports = function(grunt) {
                 command: function (opts) {
 
                     if (opts.indexOf('_') > -1) {
-                        opts = opts.split("--").join(" --");
-                        opts = opts.split("+").join(" ");
+                        opts = opts.replaceAll("--"," --").replaceAll("+", " ");
                         var temp = opts.split('_');
                         var $cmd = "";
                         for (var i=0; i<temp.length; i++){
@@ -128,7 +140,7 @@ module.exports = function(grunt) {
                 }
             },
             sequelize_migrate: {
-                command : $sequelizeCommonCmd + 'db:migrate --config src/main/config/config.json'
+                command : $sequelizeCommonCmd + $sequelizeMigrationCmd
             }
         },
 
