@@ -12,7 +12,20 @@ module.exports = function(grunt) {
     var $junitResults = $outputDir + '/junit-test-results.xml';
     var $jasmineSpecRunner = $outputDir + '/_SpecRunner.html';
     var $coverageOutputDir = $outputDir + '/coverage';
+    var $sequelizeCommonCmd = 'node node_modules/sequelize-cli/bin/sequelize ';
+    var $sequelizeMigrationCmd = 'db:migrate --config src/main/config/config.json';
 
+    /**
+     * Grunt 스크립트에서 사용할 자체 Replace All 함수
+     * grunt는 독립적으로도 동작해야한다고 생각하므로 util 없이 별도로 만들었음
+     * @param source
+     * @param target
+     * @returns {string}
+     */
+    String.prototype.replaceAll = function(source, target) {
+        var str = this;
+        return str.split(source).join(target);
+    }
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -97,6 +110,37 @@ module.exports = function(grunt) {
             },
             mon_debug: {
                 command: 'nodemon --debug bin/www'
+            },
+            sequelize_cli: {
+                /**
+                 * 윈도우에서 bash가 안되서... 편하게 사용하려고 만들었음
+                 * 옵션 : : -> _
+                 * 띄어쓰기는 + 주면 됨
+                 * ex ) 원하는 명령어 : ... db:migration --config config/config.json
+                 * ex ) 실행할 명령어 : grunt seq:db_migrate--config+config/config.json
+                 * TODO : 플러그인 형태로 좀더 쓰기 편하게 확장
+                 */
+                command: function (opts) {
+
+                    if (opts.indexOf('_') > -1) {
+                        opts = opts.replaceAll("--"," --").replaceAll("+", " ");
+                        var temp = opts.split('_');
+                        var $cmd = "";
+                        for (var i=0; i<temp.length; i++){
+                            $cmd += temp[i];
+                            $cmd += (i!=temp.length-1) ? ":" : "";
+                        }
+                        var $exe = $sequelizeCommonCmd + $cmd;
+                        console.log("Execute >>> " + $exe);
+                        return $exe;
+                    } else {
+                        console.log(" ERROR : Not Found Option");
+                        return false;
+                    }
+                }
+            },
+            sequelize_migrate: {
+                command : $sequelizeCommonCmd + $sequelizeMigrationCmd
             }
         },
 
@@ -188,4 +232,8 @@ module.exports = function(grunt) {
     grunt.registerTask('run', [ 'shell:mon_run']);
     grunt.registerTask('debug', [ 'shell:mon_debug']);
     grunt.registerTask('default', ['clean','test','shell:mon_run']);
+    grunt.registerTask('seq', function (opts) {
+        grunt.task.run('shell:sequelize_cli:' + opts);
+    });
+    grunt.registerTask('migrate',['shell:sequelize_migrate']);
 }
