@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  .container
+    .row(style='margin-bottom: 10px;')
+      #breadcrumb.btn-group.btn-breadcrumb
+        a.btn.btn-default(name='breadcrumb_nav_btn', href='#', data-dept-code='')
+          i.glyphicon.glyphicon-home
+    .row
+      ul#orgView.list-group
+    input#deptCode(type='hidden', name='deptCode')
+    input#deptName(type='hidden', name='deptName')
+  script(src='/js/orgTree.js')
