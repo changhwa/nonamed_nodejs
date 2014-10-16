@@ -5,7 +5,7 @@ module.exports  = function(sequelize, DataTypes) {
     var DeptUser = sequelize.import(__dirname + "/deptUser");
     var Department =  sequelize.define("Department", {
         code: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             primaryKey: true
         },
         dept_name: {

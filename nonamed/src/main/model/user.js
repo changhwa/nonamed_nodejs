@@ -3,7 +3,7 @@
 module.exports  = function(sequelize, DataTypes) {
     var User =  sequelize.define("User", {
         code: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             primaryKey: true
         },
         passwd: {

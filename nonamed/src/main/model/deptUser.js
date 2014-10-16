@@ -8,13 +8,13 @@ module.exports  = function(sequelize, DataTypes) {
             autoIncrement: true
         },
         user_code: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             allowNull: false,
             references: "users",
             referencesKey: "code"
         },
         department_code: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(50),
             allowNull: false,
             references: "Department",
             referencesKey: "code"
