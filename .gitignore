@@ -6,3 +6,5 @@ nonamed/node_modules/
 .project
 nonamed/.classpath
 nonamed/.project
+nonamed/build/
+nonamed/*.swp
