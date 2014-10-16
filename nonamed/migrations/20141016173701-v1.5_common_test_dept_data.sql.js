@@ -9,25 +9,22 @@ module.exports = {
         //Department
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
-            "VALUES('da11111111','테스트부서1',null)");
+            "VALUES('1','테스트부서1',0)");
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
-            "VALUES('db11111111','테스트부서1-1','da11111111')");
+            "VALUES('db11111111','테스트부서1-1','1')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
             "VALUES('dc11111111','테스트부서1-1-1','db11111111')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
-            "VALUES('dd11111111','테스트부서1-2','da11111111')");
+            "VALUES('dd11111111','테스트부서1-2','1')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
-            "VALUES('de11111111','테스트부서1-3','da11111111')");
+            "VALUES('de11111111','테스트부서1-3','1')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "Department(code, dept_name, parent_dept_code) " +
-            "VALUES('df11111111','테스트부서1-4','da11111111')").complete(done);
-
-
-
+            "VALUES('df11111111','테스트부서1-4','1')").complete(done);
     },
 
     down: function(migration, DataTypes, done) {

@@ -37,7 +37,7 @@ function getOrgViewTree(){
         var template = '<a href="#" name="breadcrumb_nav_btn" data-dept-code="'+currentDeptCode+'" class="btn btn-default">'+$("#deptName").val()+'</a>';
         $("#breadcrumb").append(template);
     } else {
-        currentDeptCode = '1';
+        currentDeptCode = '0';
     }
 
     var url = "http://localhost:3000/depts/tree";
@@ -49,10 +49,16 @@ function getOrgViewTree(){
         data: data,
         dataType: 'json',
         success:function(args){
-            var dept = args;
+            var dept = args.dept;
             $("#orgView").html('');
             $.each(dept, function(i){
                 var template = "<li name='_dept' data-dept-code="+dept[i].code+" class='list-group-item'><i class='glyphicon glyphicon-folder-close'></i>"+dept[i].dept_name+"</li>";
+                $("#orgView").append(template);
+            });
+
+            var user = args.user;
+            $.each(user, function(i){
+                var template = "<li name='_user' data-dept-code="+user[i].code+" class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
         },
