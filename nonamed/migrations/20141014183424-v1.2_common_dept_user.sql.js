@@ -24,7 +24,7 @@ module.exports = {
                     references: "users",
                     referencesKey: "code"
                 },
-                dept_code: {
+                department_code: {
                     type: DataTypes.STRING(20),
                     allowNull: false,
                     references: "Department",
@@ -36,7 +36,6 @@ module.exports = {
             }
         ).complete(done);
 
-        done() // sets the migration as finished
     },
 
     down: function(migration, DataTypes, done) {

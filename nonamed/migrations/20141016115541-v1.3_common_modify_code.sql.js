@@ -16,7 +16,7 @@ module.exports = {
             {
                 type: DataTypes.STRING(50)
             }
-        ).complete(done);
+        );
 
         migration.changeColumn(
             'users',
@@ -26,7 +26,6 @@ module.exports = {
             }
         ).complete(done);
 
-        done() // sets the migration as finished
     },
 
     down: function(migration, DataTypes, done) {

@@ -21,8 +21,6 @@ module.exports = {
                 charset: 'utf8'
             }
         ).complete(done);
-
-        done() // sets the migration as finished
     },
 
     down: function(migration, DataTypes, done) {
