@@ -23,4 +23,18 @@ router.get('/tree', function(req,res){
         });
     });
 });
+
+router.post('/create',function(req,res){
+    var dept = model.Department.build({
+        code: 'D'+uuid.v1(),
+        dept_name: req.body.deptName,
+        parent_dept_code: req.body.parentDeptCode
+    });
+    dept.save().success(function(){
+        // 성공메세지
+        console.log("success");
+    });
+});
+
+
 module.exports = router;

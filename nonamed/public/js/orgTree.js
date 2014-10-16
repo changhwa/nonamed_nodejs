@@ -1,3 +1,5 @@
+var BASE_URL = 'http://localhost:3000/depts';
+
 $(document).ready(function(){
     getOrgViewTree();
     $("#orgView").on('click','li[name=_dept]',function(){
@@ -8,6 +10,9 @@ $(document).ready(function(){
     });
     $("#breadcrumb").on('click','a[name=breadcrumb_nav_btn]',function(){
         moveBreadCrumbLink($(this).index());
+    });
+    $("#btn_list").on('click','#add_dept',function(){
+        addDept();
     });
 });
 
@@ -40,7 +45,7 @@ function getOrgViewTree(){
         currentDeptCode = '0';
     }
 
-    var url = "http://localhost:3000/depts/tree";
+    var url = BASE_URL + "/tree";
     var data = {"deptCode" : currentDeptCode};
 
     $.ajax({
@@ -61,6 +66,26 @@ function getOrgViewTree(){
                 var template = "<li name='_user' data-dept-code="+user[i].code+" class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
+        },
+        error:function(e){
+            alert(e.responseText);
+        }
+    });
+}
+
+function addDept(){
+    var deptCode = $("#deptCode").val();
+    deptCode = (deptCode == '') ? 0 : deptCode;
+    var url = BASE_URL + "/create";
+    var data = {"deptName" : $("#regDeptName").val(), "parentDeptCode" : deptCode};
+
+    $.ajax({
+        type:"POST",
+        url:url,
+        data: data,
+        dataType: 'json',
+        success:function(args){
+            console.log(args);
         },
         error:function(e){
             alert(e.responseText);
