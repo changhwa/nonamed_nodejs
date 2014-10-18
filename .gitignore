@@ -8,3 +8,4 @@ nonamed/.classpath
 nonamed/.project
 nonamed/build/
 nonamed/*.swp
+*DS_Store

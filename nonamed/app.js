@@ -9,6 +9,7 @@ var session = require('express-session');
 var routes = require('./src/main/routes/index');
 var users = require('./src/main/routes/users');
 var dept = require('./src/main/routes/dept');
+var approval = require('./src/main/routes/approval');
 
 var app = express();
 
@@ -30,10 +31,10 @@ app.use(session({
     saveUninitialized: true //TODO : 옵션 기본값은 true 확인해보기
 }));
 
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/depts', dept);
+app.use('/approval', approval);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
