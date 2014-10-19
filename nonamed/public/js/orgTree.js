@@ -46,7 +46,7 @@ function getOrgViewTree(){
         currentDeptCode = '0';
     }
 
-    var url = BASE_DEPT_URL + "/tree";
+    var url = BASE_DEPT_URL + "/tree"; ///depts/tree
     var data = {"deptCode" : currentDeptCode};
 
     $.ajax({
@@ -58,7 +58,7 @@ function getOrgViewTree(){
             var dept = args.dept;
             $("#orgView").html('');
             $.each(dept, function(i){
-                var template = "<li name='_dept' data-dept-code="+dept[i].code+" class='list-group-item'><i class='glyphicon glyphicon-folder-close'></i>"+dept[i].dept_name+"</li>";
+                var template = "<li name='_dept' data-dept-code="+dept[i].code+" class='list-group-item ui-widget-content'><i class='glyphicon glyphicon-folder-close'></i>"+dept[i].dept_name+"</li>";
                 $("#orgView").append(template);
             });
 
@@ -67,6 +67,7 @@ function getOrgViewTree(){
                 var template = "<li name='_user' data-dept-code="+user[i].code+" class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
+            orgDragAndDrop();
         },
         error:function(e){
             alert(e.responseText);
@@ -125,4 +126,16 @@ function addUser(){
             alert('회원가입에 실패하였습니다');
         }
     });
+}
+
+function orgDragAndDrop(){
+    $("li[name=_dept]").draggable({
+        helper: 'clone'
+    });
+    $("a[name=breadcrumb_nav_btn]").droppable({
+        drop: function( event, ui ) {
+            console.log(event);
+        }
+    });
+
 }
