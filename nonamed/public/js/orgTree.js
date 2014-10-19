@@ -1,4 +1,5 @@
-var BASE_URL = 'http://localhost:3000/depts';
+var BASE_DEPT_URL = 'http://localhost:3000/depts';
+var BASE_USER_URL = 'http://localhost:3000/users';
 
 $(document).ready(function(){
     getOrgViewTree();
@@ -11,9 +12,9 @@ $(document).ready(function(){
     $("#breadcrumb").on('click','a[name=breadcrumb_nav_btn]',function(){
         moveBreadCrumbLink($(this).index());
     });
-    $("#btn_list").on('click','#add_dept',function(){
-        addDept();
-    });
+    $("#btn_list")
+        .on('click','#add_dept',function(){addDept();})
+        .on('click','#add_user',function(){addUser();});
 });
 
 function moveBreadCrumbLink(index){
@@ -45,7 +46,7 @@ function getOrgViewTree(){
         currentDeptCode = '0';
     }
 
-    var url = BASE_URL + "/tree";
+    var url = BASE_DEPT_URL + "/tree";
     var data = {"deptCode" : currentDeptCode};
 
     $.ajax({
@@ -73,10 +74,14 @@ function getOrgViewTree(){
     });
 }
 
-function addDept(){
+function getDeptCode() {
     var deptCode = $("#deptCode").val();
     deptCode = (deptCode == '') ? 0 : deptCode;
-    var url = BASE_URL + "/create";
+    return deptCode;
+}
+function addDept(){
+    var deptCode = getDeptCode();
+    var url = BASE_DEPT_URL + "/create";
     var data = {"deptName" : $("#regDeptName").val(), "parentDeptCode" : deptCode};
 
     $.ajax({
@@ -89,6 +94,35 @@ function addDept(){
         },
         error:function(e){
             alert(e.responseText);
+        }
+    });
+}
+
+function addUser(){
+
+    var user = {
+        "code" : $("#regUserCode").val(),
+        "passwd" : $("#regUserPasswd").val(),
+        "name" : $("#regUserName").val(),
+        "authKey" : $("#regUserAuthKey").val(),
+        "office" : $("#regUserOffice").val(),
+        "position" : $("#regUserPosition").val(),
+        "securityGrade" : $("#regUserSecurityGrade").val(),
+        "deptCode" : getDeptCode()
+    };
+
+    $.ajax({
+        type:"POST",
+        url : BASE_USER_URL +"/create",
+        data: user,
+        dataType: 'json',
+        success:function(args){
+            alert(args.msg);
+            $("#close_user_add_modal").click();
+            getOrgViewTree();
+        },
+        error: function(e){
+            alert('회원가입에 실패하였습니다');
         }
     });
 }

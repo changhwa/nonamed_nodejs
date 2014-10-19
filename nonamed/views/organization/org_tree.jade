@@ -21,6 +21,48 @@ block content
                       div
                         button#add_dept.btn.btn-default(style="margin-right:10px;") 등록
                         button.btn.btn-default 취소
+        a#show_user_add_modal.btn.btn-default.loading(style='margin-right: 5px;', href='#user_add_modal', data-toggle="modal") 사용자추가
+        #user_add_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button#close_user_add_modal.close(data-dismiss="modal") ✕
+                h3.modal-title(style="text-align: left;") 사용자 등록
+              .modal-body(style="text-align:center")
+                form.form-horizontal
+                  fieldset
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserCode') 사번
+                      .col-sm-10
+                        input#regUserCode.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserPasswd') 암호
+                      .col-sm-10
+                        input#regUserPasswd.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserName') 이름
+                      .col-sm-10
+                        input#regUserName.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserAuthKey') 연동키
+                      .col-sm-10
+                        input#regUserAuthKey.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserOffice') 직위
+                      .col-sm-10
+                        input#regUserOffice.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regUserPosition') 직책
+                      .col-sm-10
+                        input#regUserPosition.form-control(type='text')
+                    .form-group
+                      label.col-sm-2.control-label(for='regSecurityGrade') 등급
+                      .col-sm-10
+                        input#regSecurityGrade.form-control(type='text')
+                    .form-group
+                      div
+                        button#add_user.btn.btn-default(style="margin-right:10px;") 등록
+                        button.btn.btn-default 취소
     .row(style='margin-bottom: 10px;')
       #breadcrumb.btn-group.btn-breadcrumb
         a.btn.btn-default(name='breadcrumb_nav_btn', href='#', data-dept-code='')
