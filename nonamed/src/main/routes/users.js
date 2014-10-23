@@ -28,5 +28,14 @@ router.post('/create',function(req,res){
 
 });
 
+router.post('/move',function(req,res){
+    model.DeptUser.find({ where: { user_code: req.body.source } })
+        .success(function(_user){
+            _user.department_code = req.body.target;
+            _user.save().success(function(){
+                res.send({msg: "조직도변경에 성공하였습니다."});
+            });
+        });
+});
 
 module.exports = router;

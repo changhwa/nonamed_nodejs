@@ -36,5 +36,15 @@ router.post('/create',function(req,res){
     });
 });
 
+router.post('/move',function(req,res){
+
+    model.Department.find(req.body.source)
+        .success(function(_dept){
+            _dept.parent_dept_code = req.body.target;
+            _dept.save().success(function(){
+                res.send({msg: "조직도변경에 성공하였습니다."});
+            });
+        });
+});
 
 module.exports = router;

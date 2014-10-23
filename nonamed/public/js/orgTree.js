@@ -58,13 +58,13 @@ function getOrgViewTree(){
             var dept = args.dept;
             $("#orgView").html('');
             $.each(dept, function(i){
-                var template = "<li name='_dept' data-dept-code="+dept[i].code+" class='list-group-item ui-widget-content'><i class='glyphicon glyphicon-folder-close'></i>"+dept[i].dept_name+"</li>";
+                var template = "<li name='_dept' data-dept-code="+dept[i].code+" data-org-type='dept' class='list-group-item ui-widget-content'><i class='glyphicon glyphicon-folder-close'></i>"+dept[i].dept_name+"</li>";
                 $("#orgView").append(template);
             });
 
             var user = args.user;
             $.each(user, function(i){
-                var template = "<li name='_user' data-dept-code="+user[i].code+" class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
+                var template = "<li name='_user' data-dept-code="+user[i].code+" data-org-type='user' class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
             orgDragAndDrop();
@@ -129,13 +129,51 @@ function addUser(){
 }
 
 function orgDragAndDrop(){
-    $("li[name=_dept]").draggable({
-        helper: 'clone'
+    $("li[name=_dept], li[name=_user]").draggable({
+        helper: 'clone',
+        cursor: 'move'
     });
-    $("a[name=breadcrumb_nav_btn]").droppable({
-        drop: function( event, ui ) {
-            console.log(event);
+    $("a[name=breadcrumb_nav_btn], li[name=_dept]").droppable({
+        hoverClass: 'ui-state-hover',
+        drop: function(event,ui){
+            dropEvent(event, ui);
         }
     });
+}
 
+function dropEvent ( event, ui ) {
+    $(this).addClass('ui-state-highlight');
+    $(ui.draggable).draggable('disable');
+
+    var source = ui.draggable[0].dataset.deptCode;
+    var target = event.target.dataset.deptCode;
+    var orgType = ui.draggable[0].dataset.orgType;
+
+    orgMove(source,target, orgType);
+}
+
+function orgMove(source, target, orgType){
+
+    var data = {
+        "source" : source,
+        "target" : target
+    };
+
+    var type = (orgType == 'user') ? BASE_USER_URL : BASE_DEPT_URL;
+    var url = type + "/move";
+
+    $.ajax({
+        type:"POST",
+        url : url,
+        data: data,
+        dataType: 'json',
+        success:function(args){
+            alert(args.msg);
+            $("#deptCode").val(target);
+            getOrgViewTree();
+        },
+        error: function(e){
+            alert('실패하였습니다');
+        }
+    });
 }
