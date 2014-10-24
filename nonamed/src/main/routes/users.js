@@ -13,28 +13,31 @@ router.post('/create',function(req,res){
         position: req.body.position,
         security_grade: req.body.securityGrade
     });
-    user.save().success(function(){
-        // 성공메세지
-        console.info("success");
-        model.Department.find(req.body.deptCode).success(function(dept){
-            model.DeptUser.build({
-                user_code: req.body.code,
-                department_code: dept.dataValues.code
-            }).save().success(function(){
-                res.send({msg: "회원가입에 성공하였습니다."});
-            })
-        })
+    user.save().then(function() {
+        return model.Department.find(req.body.deptCode);
+    }).then(function(dept){
+        return model.DeptUser.build({
+            user_code: req.body.code,
+            department_code: dept.dataValues.code
+        }).save();
+    }).then(function(){
+        res.send({msg: "회원가입에 성공하였습니다."});
+    }).catch(function(e){
+        console.log( " ERROR : " + e);
+        res.send({msg: "회원가입에 실패하였습니다."});
     });
-
 });
 
 router.post('/move',function(req,res){
     model.DeptUser.find({ where: { user_code: req.body.source } })
-        .success(function(_user){
+        .then(function(_user) {
             _user.department_code = req.body.target;
-            _user.save().success(function(){
-                res.send({msg: "조직도변경에 성공하였습니다."});
-            });
+            return _user.save();
+        }).then (function(){
+            res.send({msg: "조직도변경에 성공하였습니다."});
+        }).catch(function(e){
+            console.log(e);
+            res.send({msg: "조직도변경에 실패하였습니다."});
         });
 });
 

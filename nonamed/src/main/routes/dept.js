@@ -12,38 +12,40 @@ router.get('/tree', function(req,res){
     var organTree = {};
     model.Department.findAll({
         where: { parent_dept_code: req.query.deptCode }
-    }).success(function(dept) {
-        organTree.dept =dept ;
-        model.Department.find((req.query.deptCode==0) ? 1 : req.query.deptCode).success(function(result){
-            result.getUsers().success(function(user){
-                organTree.user = user;
-                res.send(organTree);
-            });
-
-        });
+    }).then(function(dept) {
+        organTree.dept = dept;
+        return model.Department.find((req.query.deptCode == 0) ? 1 : req.query.deptCode);
+    }).then(function(result) {
+        return result.getUsers();
+    }).then(function(user){
+        organTree.user = user;
+        res.send(organTree);
     });
 });
 
 router.post('/create',function(req,res){
-    var dept = model.Department.build({
+    model.Department.build({
         code: 'D'+uuid.v1(),
         dept_name: req.body.deptName,
         parent_dept_code: req.body.parentDeptCode
-    });
-    dept.save().success(function(){
-        // 성공메세지
-        console.log("success");
+    }).save().then(function(){
+        res.send({msg: "부서를 추가하였습니다."});
+    }).catch(function(e){
+        console.log(" ERROR : " + e);
+        res.send({msg: "실패하였습니다"});
     });
 });
 
 router.post('/move',function(req,res){
 
     model.Department.find(req.body.source)
-        .success(function(_dept){
+        .then(function(_dept){
             _dept.parent_dept_code = req.body.target;
-            _dept.save().success(function(){
-                res.send({msg: "조직도변경에 성공하였습니다."});
-            });
+            return _dept.save();
+        }).then(function(){
+            res.send({msg: "조직도변경에 성공하였습니다."});
+        }).catch(function(){
+            res.send({msg: "조직도변경에 실패하였습니다."});
         });
 });
 
