@@ -1,28 +1,98 @@
 var express = require('express');
 var router = express.Router();
+var model = require('../model');
 
-/* GET users listing. */
 router.get('/', function(req, res) {
-    // res.send('respond with a resource');
-    res.render('approval/apprMain', { title: '전자결재 메인페이지' });
+    res.render('approval/apprMain', { title: '전자결재' });
 });
 
-router.get('/apprWriteDraftDoc', function(req, res) {
-    res.render('approval/apprWriteDraftDoc', { title: '기안문 작성 페이지' });
+router.get('/apprDraftDocument', function(req, res) {
+    res.render(
+        'approval/apprDraftDocument',
+        {
+            title: '기안문 작성',
+            viewStatus: 'create'
+        }
+    );
 });
 
+router.post('/apprDraftDocument/create', function(req, res){
+    var reqDraftDocument = model.DraftDocument.build({
+        docUid: req.body.docUid,
+        subject: req.body.subject,
+        contents: req.body.contents
+    });
 
-router.get('/apprApprovalLine', function(req, res) {
-    res.render('approval/apprApprovalLine', { title: '결재선 페이지' });
+    reqDraftDocument
+        .save()
+        .success(function(){
+            res.send({ msg: "create success" });
+        })
+        .error(function(errors){
+            console.log(errors);
+            res.send({ msg: "create fail" })
+        });
 });
 
-router.get('/apprApprovalWaitList', function(req, res) {
-    res.render('approval/apprApprovalWaitList', { title: '결재대기 목록 페이지' });
+router.get('/apprDraftDocument/read', function(req, res){
+    var docUid = "DOC114102417002026";
+
+    model.DraftDocument.find({
+        where: { docUid: docUid }
+
+    }).success(function(draftDocument) {
+        var draftDocumentJson = JSON.stringify(draftDocument);
+        res.render(
+            'approval/apprDraftDocument',
+            {
+                draftDocumentJson: draftDocumentJson,
+                viewStatus: 'read'
+            }
+        );
+    });
 });
 
-router.get('/apprApprovalDoneList', function(req, res) {
-    res.render('approval/apprApprovalDoneList', { title: '결재완료 목록 페이지' });
+router.post('/apprDraftDocument/update', function(req, res){
+    var reqDraftDocument = model.DraftDocument.build({
+        docUid: req.body.docUid,
+        subject: req.body.subject,
+        contents: req.body.contents
+    });
+
+    model.DraftDocument.find({
+        where: { docUid: reqDraftDocument.docUid }
+
+    }).success(function(draftDocument) {
+        draftDocument
+            .updateAttributes({
+                subject: reqDraftDocument.subject,
+                contents: reqDraftDocument.contents
+            })
+            .success(function() {
+                var draftDocumentJson = JSON.stringify(draftDocument);
+                res.send({
+                    msg: "update success",
+                    draftDocumentJson: draftDocumentJson
+                });
+            });
+    });
 });
 
+router.post('/apprDraftDocument/delete', function(req, res){
+    var reqDraftDocument = model.DraftDocument.build({
+        docUid: req.body.docUid
+    });
+
+    model.DraftDocument.find({
+        where: { docUid: reqDraftDocument.docUid }
+
+    }).success(function(draftDocument){
+        draftDocument
+            .destroy()
+            .success(function(){
+                res.send({ msg: "delete success" });
+            });
+    });
+});
 
 module.exports = router;

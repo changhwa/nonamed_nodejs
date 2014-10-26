@@ -1,10 +1,22 @@
 extends ../layout
 
 block content
-    h1= title
-    button#writeDraftDoc(name="writeDraftDoc") 기안문 작성
-    button#approvalLine(name="approvalLine") 결재선 지정
-    button#approvalWaitList(name="approvalWaitList") 결재대기 목록
-    button#approvalDoneList(name="approvalDoneList") 결재완료 목록
+  .container
+    div.row
+      div.col-lg-lg-12
+        h1.page-header= title
+    div.row
+      div.col-lg-12
+        div.panel.panel-default
+          div.panel-heading
+            |메뉴 목록
+          div.panel-body
+            div.row
+              div.col-lg-6
+                form
+                  div
+                    input#writeDraftDoc.btn.btn-default(name="writeDraftDoc", type='button', value='기안문 작성')
+                  div
+                    input#readDraftDoc.btn.btn-default(name="readDraftDoc", type='button', value='기안문 조회')
 
-    script(src='/js/apprMain.js')
+  script(src='/js/apprMain.js')

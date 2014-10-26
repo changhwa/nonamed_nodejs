@@ -4,6 +4,7 @@ module.exports  = function(sequelize, DataTypes) {
     var DraftDocument =  sequelize.define("DraftDocument", {
         docUid: {
             type: DataTypes.STRING,
+            allowNull: false,
             primaryKey: true
         },
         subject: DataTypes.STRING,
