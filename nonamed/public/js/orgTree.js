@@ -2,12 +2,14 @@ var BASE_DEPT_URL = 'http://localhost:3000/depts';
 var BASE_USER_URL = 'http://localhost:3000/users';
 
 $(document).ready(function(){
+    if($("#mode").val() == 'edit'){
+        $("#btn_list").show();
+    }
     getOrgViewTree();
     $("#orgView").on('click','li[name=_dept]',function(){
         $("#deptCode").val($(this).data("deptCode"));
         $("#deptName").val($(this).text());
         getOrgViewTree();
-
     });
     $("#orgView").on('click','li[name=_user]',function(){
         $("#orgUserCode").val($(this).data("deptCode"));
@@ -64,7 +66,9 @@ function getOrgViewTree(){
                 var template = "<li name='_user' data-dept-code="+user[i].code+" data-org-type='user' class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
-            orgDragAndDrop();
+            if($("#mode").val() == 'edit'){
+                orgDragAndDrop();
+            }
         },
         error:function(e){
             alert(e.responseText);

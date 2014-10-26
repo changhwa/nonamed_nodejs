@@ -2,7 +2,7 @@ extends ../layout
 block content
   .container
     .row
-      #btn_list.text-right
+      #btn_list.text-right(style='display:none;')
         a#show_dept_add_modal.btn.btn-default.loading(style='margin-right: 5px;', href='#dept_add_modal', data-toggle="modal") 부서추가
         #dept_add_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
           .modal-dialog
@@ -69,6 +69,7 @@ block content
           i.glyphicon.glyphicon-home
     .row
       ul#orgView.list-group
+    input#mode(type='hidden', name='mode' value='#{mode}')
     input#deptCode(type='hidden', name='deptCode')
     input#deptName(type='hidden', name='deptName')
     input#orgUserCode(type='hidden', name='orgUserCode')

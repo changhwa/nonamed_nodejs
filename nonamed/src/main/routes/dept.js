@@ -5,7 +5,7 @@ var uuid = require('node-uuid');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('organization/org_tree', { title: 'Express' });
+    res.render('organization/org_tree', { mode: 'view' });
 });
 
 router.get('/tree', function(req,res){
