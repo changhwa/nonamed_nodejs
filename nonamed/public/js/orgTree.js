@@ -9,6 +9,10 @@ $(document).ready(function(){
         getOrgViewTree();
 
     });
+    $("#orgView").on('click','li[name=_user]',function(){
+        $("#orgUserCode").val($(this).data("deptCode"));
+        $("#orgUserName").val($(this).text());
+    });
     $("#breadcrumb").on('click','a[name=breadcrumb_nav_btn]',function(){
         moveBreadCrumbLink($(this).index());
     });
