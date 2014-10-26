@@ -23,12 +23,29 @@ router.get('/tree', function(req,res){
     });
 });
 
+router.get('/breadcrumbs', function(req,res){
+    model.Department.find(req.query.deptCode).then(function(dept){
+        if(dept != null){
+            var path = dept.dataValues.path;
+            var pathArr = path.split('/');
+            return model.Department.findAll({ where : {code : pathArr}, order: 'level'})
+        }
+    }).then(function(_deptAll){
+        res.send(_deptAll);
+    })
+});
+
 router.post('/create',function(req,res){
-    model.Department.build({
-        code: 'D'+uuid.v1(),
-        dept_name: req.body.deptName,
-        parent_dept_code: req.body.parentDeptCode
-    }).save().then(function(){
+    model.Department.find(req.body.parentDeptCode).then(function(dept){
+        var code = 'D'+uuid.v1();
+        return model.Department.build({
+            code: code,
+            dept_name: req.body.deptName,
+            parent_dept_code: req.body.parentDeptCode,
+            path: dept.dataValues.path+code+"/",
+            level: dept.dataValues.level+1
+        }).save();
+    }).then(function(){
         res.send({msg: "부서를 추가하였습니다."});
     }).catch(function(e){
         console.log(" ERROR : " + e);

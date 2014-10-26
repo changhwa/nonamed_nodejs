@@ -37,17 +37,10 @@ function moveBreadCrumbLink(index){
 
 function getOrgViewTree(){
 
-    var currentDeptCode = $("#deptCode").val();
-
-    if(currentDeptCode != ''){
-        var template = '<a href="#" name="breadcrumb_nav_btn" data-dept-code="'+currentDeptCode+'" class="btn btn-default">'+$("#deptName").val()+'</a>';
-        $("#breadcrumb").append(template);
-    } else {
-        currentDeptCode = '0';
-    }
+    getBreadCrumbs();
 
     var url = BASE_DEPT_URL + "/tree"; ///depts/tree
-    var data = {"deptCode" : currentDeptCode};
+    var data = {"deptCode" : getDeptCode()};
 
     $.ajax({
         type:"GET",
@@ -174,6 +167,30 @@ function orgMove(source, target, orgType){
         },
         error: function(e){
             alert('실패하였습니다');
+        }
+    });
+}
+
+function getBreadCrumbs(){
+
+    var data = {deptCode : getDeptCode()};
+    var url = BASE_DEPT_URL + "/breadcrumbs";
+
+    $.ajax({
+        type:"GET",
+        url:url,
+        data: data,
+        dataType: 'json',
+        success:function(args){
+            var dept = $("a[name=breadcrumb_nav_btn]");
+            for(var i = dept.length; i>0; i--){
+                dept.eq(i).remove();
+            }
+            var dept = args;
+            $.each(dept, function(i){
+                var template = '<a href="#" name="breadcrumb_nav_btn" data-dept-code="'+dept[i].code+'" class="btn btn-default">'+dept[i].dept_name+'</a>';
+                $("#breadcrumb").append(template);
+            });
         }
     });
 }

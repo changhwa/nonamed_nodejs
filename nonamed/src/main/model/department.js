@@ -16,7 +16,9 @@ module.exports  = function(sequelize, DataTypes) {
             type: DataTypes.STRING(1),
             defaultValue: 'Y'
         },
-        parent_dept_code: DataTypes.STRING(20)
+        parent_dept_code: DataTypes.STRING(50),
+        path: DataTypes.STRING,
+        level: DataTypes.INTEGER
     },{
         underscored: true,
         timestamps: false,
