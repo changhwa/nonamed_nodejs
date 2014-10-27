@@ -2,21 +2,23 @@ extends ../layout
 
 block content
   .container
-    div.row
-      div.col-lg-lg-12
-        h1.page-header= title
-    div.row
-      div.col-lg-12
-        div.panel.panel-default
-          div.panel-heading
-            |메뉴 목록
-          div.panel-body
-            div.row
-              div.col-lg-6
-                form
-                  div
-                    input#writeDraftDoc.btn.btn-default(name="writeDraftDoc", type='button', value='기안문 작성')
-                  div
-                    input#readDraftDoc.btn.btn-default(name="readDraftDoc", type='button', value='기안문 조회')
-
+    div.row.col-lg-lg-12
+      h1.page-header= title
+    div.row.panel.panel-default.col-lg-12
+      div.panel-heading
+        |메뉴 목록
+      div.row.panel-body
+        form.col-lg-6
+          div
+            input#writeDraftDoc.btn.btn-default(
+              name="writeDraftDoc", type='button', value='기안문 작성'
+            )
+          div
+            input#readDraftDoc.btn.btn-default(
+              name="readDraftDoc", type='button', value='기안문 조회'
+            )
+          div
+            input#listDraftDoc.btn.btn-default(
+              name="listDraftDoc", type='button', value='기안문 목록'
+            )
   script(src='/js/apprMain.js')

@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports  = function(sequelize, DataTypes) {
-    var DraftDocument =  sequelize.define("DraftDocument", {
+    var DraftDocument = sequelize.define("DraftDocument", {
         docUid: {
             //type: DataTypes.STRING,
             type: DataTypes.UUID,

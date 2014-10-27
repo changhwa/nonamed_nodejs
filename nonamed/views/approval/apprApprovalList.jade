@@ -1,0 +1,28 @@
+extends ../layout
+block content
+  .container
+    div.row.col-lg-lg-12
+      h1.page-header= title
+    div.row.panel.panel-default.col-lg-12
+      div.row.panel-heading
+        | 결재 목록
+      div.row.panel-body
+        form(role='form').col-lg-6
+          div
+            input#btnHistoryBack.btn.btn-default(name='btnHistoryBack', type='button', value='뒤로')
+          table.table.table-striped.table-bordered#draftDocumentsTable(name='draftDocumentsTable')
+            thead
+              tr
+                //th docUid
+                th subject
+                th contents
+            tfoot
+              tr
+                //th docUid
+                th subject
+                th contents
+  input#draftDocumentsJson(name='draftDocumentsJson', type='hidden', value= draftDocumentsJson)
+  input#docUid(name='docUid', type='hidden')
+  input#viewStatus(name='viewStatus', type='hidden', value=viewStatus)
+  script(src='/js/apprApprovalList.js')
+  script(src='http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js')

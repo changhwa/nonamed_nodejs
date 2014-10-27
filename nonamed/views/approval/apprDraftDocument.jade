@@ -3,27 +3,23 @@ extends ../layout
 block content
   //Template URL : http://startbootstrap.com/templates/sb-admin-2/index.html
   .container
-    div.row
-      div.col-lg-lg-12
-        h1.page-header= title
-    div.row
-      div.col-lg-12
-        div.panel.panel-default
-          div.panel-heading
-            |휴가신청서
-          div.panel-body
-            div.row
-              div.col-lg-6
-                // TODO : role 분석
-                form(role='form')
-                  div.form-group
-                    input#subject.form-control(name='subject', type='text', placeholder='제목을 입력하세요')
-                    input#contents.form-control(name='contents', type='text', placeholder='내용을 입력하세요')
-                  div
-                    input#btnHistoryBack.btn.btn-default(name='btnHistoryBack', type='button', value='뒤로')
-                    input#btnDoDraft.btn.btn-default.hidden(name='btnDoDraft', type='button', value='작성')
-                    input#btnUpdateDraft.btn.btn-default.hidden(name='btnUpdateDraft', type='button', value='수정')
-                    input#btnDeleteDraft.btn.btn-default.hidden(name='btnDeleteDraft', type='button', value='삭제')
+    div.row.col-lg-lg-12
+      h1.page-header= title
+    div.row.panel.panel-default.col-lg-12
+      div.row.panel-heading
+        |휴가신청서
+      div.row.panel-body
+        // TODO : role 분석
+        form(role='form').col-lg-6
+          div.form-group
+            input#subject.form-control(name='subject', type='text', placeholder='제목을 입력하세요')
+            input#contents.form-control(name='contents', type='text', placeholder='내용을 입력하세요')
+          div
+            input#btnHistoryBack.btn.btn-default(name='btnHistoryBack', type='button', value='뒤로')
+            input#btnDoDraft.btn.btn-default.hidden(name='btnDoDraft', type='button', value='작성')
+            input#btnUpdateDraft.btn.btn-default.hidden(name='btnUpdateDraft', type='button', value='수정')
+            input#btnDeleteDraft.btn.btn-default.hidden(name='btnDeleteDraft', type='button', value='삭제')
+
 
   input#draftDocumentJson(name='draftDocumentJson', type='hidden', value= draftDocumentJson)
   input#docUid(name='docUid', type='hidden')
