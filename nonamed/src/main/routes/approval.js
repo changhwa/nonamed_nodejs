@@ -18,7 +18,7 @@ router.get('/apprDraftDocument', function(req, res) {
 
 router.post('/apprDraftDocument/create', function(req, res){
     var reqDraftDocument = model.DraftDocument.build({
-        docUid: req.body.docUid,
+        //docUid: req.body.docUid,
         subject: req.body.subject,
         contents: req.body.contents
     });
@@ -35,7 +35,7 @@ router.post('/apprDraftDocument/create', function(req, res){
 });
 
 router.get('/apprDraftDocument/read', function(req, res){
-    var docUid = "DOC114102417002026";
+    var docUid = "39e23620-5da9-11e4-a624-f3361f6dcbd6";
 
     model.DraftDocument.find({
         where: { docUid: docUid }

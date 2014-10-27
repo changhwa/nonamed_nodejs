@@ -35,7 +35,7 @@ function initBtn(){
  */
 function doDraft(){
     var draftDocument = {
-        "docUid": getDocKey(),
+        //"docUid": getDocKey(),    //uuid로 변경
         "subject": $("#subject").val(),
         "contents": $("#contents").val()
     };

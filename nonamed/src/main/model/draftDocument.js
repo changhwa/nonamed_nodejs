@@ -3,8 +3,10 @@
 module.exports  = function(sequelize, DataTypes) {
     var DraftDocument =  sequelize.define("DraftDocument", {
         docUid: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            //type: DataTypes.STRING,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV1,
+            //allowNull: false,
             primaryKey: true
         },
         subject: DataTypes.STRING,
