@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 router.get('/tree', function(req,res){
     var organTree = {};
     model.Department.findAll({
-        where: { parent_dept_code: req.query.deptCode }
+        where: { parent_dept_code: req.query.deptCode }, order: 'code'
     }).then(function(dept) {
         organTree.dept = dept;
         return model.Department.find((req.query.deptCode == 0) ? 1 : req.query.deptCode);
