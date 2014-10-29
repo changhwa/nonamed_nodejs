@@ -74,4 +74,11 @@ block content
     input#deptName(type='hidden', name='deptName')
     input#orgUserCode(type='hidden', name='orgUserCode')
     input#orgUserName(type='hidden', name='orgUserName')
+
   script(src='/js/orgTree.js')
+  script(type='text/javascript').
+    $(document).ready(
+        function(){
+            Organization.init();
+        }
+    )
