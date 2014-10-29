@@ -55,9 +55,15 @@ router.post('/create',function(req,res){
 
 router.post('/move',function(req,res){
 
-    model.Department.find(req.body.source)
-        .then(function(_dept){
+    var path = "";
+
+    model.Department.find(req.body.target)
+        .then(function(_parentDept){
+            path = _parentDept.dataValues.path;
+            return model.Department.find(req.body.source);
+        }).then(function(_dept){
             _dept.parent_dept_code = req.body.target;
+            _dept.path = path + _dept.code + "/";
             return _dept.save();
         }).then(function(){
             res.send({msg: "조직도변경에 성공하였습니다."});
