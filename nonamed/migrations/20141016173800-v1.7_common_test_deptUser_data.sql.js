@@ -9,25 +9,25 @@ module.exports = {
         //dept_user
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('1','ea11111111','db11111111')");
+            "VALUES('1','ea11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e1')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('2','eb11111111','db11111111')");
+            "VALUES('2','eb11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e1')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('3','ec11111111','dc11111111')");
+            "VALUES('3','ec11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e2')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('4','ed11111111','dd11111111')");
+            "VALUES('4','ed11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e3')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('5','ee11111111','dd11111111')");
+            "VALUES('5','ee11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e3')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('6','ef11111111','dd11111111')");
+            "VALUES('6','ef11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e3')");
         migration.migrator.sequelize.query("INSERT INTO " +
             "dept_user(id, user_code, department_code) " +
-            "VALUES('7','eg11111111','de11111111')").complete(done);
+            "VALUES('7','eg11111111','D12b74540-55c0-11e4-8ec4-8f295b65f3e4')").complete(done);
 
     },
 
