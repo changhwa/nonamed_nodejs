@@ -107,7 +107,7 @@ var Organization = (function() {
             dataType: 'json',
             success: function(args){
                 deptCallback(args);
-                userCallback(args);
+                userCallback(args, treeAfterEvent);
             },
             error:function(e){
                 alert(e.responseText);
@@ -225,12 +225,13 @@ Organization.prototype = (function(){
                 $("#orgView").append(template);
             });
         },
-        makeOrganUserTree : function(args){
+        makeOrganUserTree : function(args, callback){
             var user = args.user;
             $.each(user, function(i){
                 var template = "<li name='_user' data-dept-code="+user[i].code+" data-org-type='user' class='list-group-item'><i class='glyphicon glyphicon-user'></i>"+user[i].name+"</li>";
                 $("#orgView").append(template);
             });
+            callback();
         },
         makeBreadCrumbs : function(args){
             var deptBtn = $("a[name=breadcrumb_nav_btn]");
