@@ -36,7 +36,7 @@ module.exports  = function(sequelize, DataTypes) {
         approverAppCdName : DataTypes.STRING,
 
         /* 문서 고유아이디 */
-        docUid : DataTypes.STRING
+        docUid : DataTypes.UUID
     },{
         underscored: true,
         timestamps: false,

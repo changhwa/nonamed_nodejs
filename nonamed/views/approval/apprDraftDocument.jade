@@ -12,16 +12,38 @@ block content
         // TODO : role 분석
         form(role='form').col-lg-6
           div.form-group
-            input#subject.form-control(name='subject', type='text', placeholder='제목을 입력하세요')
-            input#contents.form-control(name='contents', type='text', placeholder='내용을 입력하세요')
+            input#subject.form-control(
+              name='subject', type='text', placeholder='제목을 입력하세요')
+
+            input#contents.form-control(
+              name='contents', type='text', placeholder='내용을 입력하세요')
+
           div
-            input#btnHistoryBack.btn.btn-default(name='btnHistoryBack', type='button', value='뒤로')
-            input#btnDoDraft.btn.btn-default.hidden(name='btnDoDraft', type='button', value='작성')
-            input#btnUpdateDraft.btn.btn-default.hidden(name='btnUpdateDraft', type='button', value='수정')
-            input#btnDeleteDraft.btn.btn-default.hidden(name='btnDeleteDraft', type='button', value='삭제')
+            input#btnHistoryBack.btn.btn-default(
+              name='btnHistoryBack', type='button', value='뒤로')
 
+            input#btnDoDraft.btn.btn-default.hidden(
+              name='btnDoDraft', type='button', value='작성')
 
-  input#draftDocumentJson(name='draftDocumentJson', type='hidden', value= draftDocumentJson)
-  input#docUid(name='docUid', type='hidden')
-  input#viewStatus(name='viewStatus', type='hidden', value=viewStatus)
+            input#btnUpdateDraft.btn.btn-default.hidden(
+              name='btnUpdateDraft', type='button', value='수정')
+
+            input#btnDeleteDraft.btn.btn-default.hidden(
+              name='btnDeleteDraft', type='button', value='삭제')
+
+            input#btnSetApprovalLine.btn.btn-default.hidden(
+              name='btnSetApprovalLine', type='button', value='결재선지정')
+
+  input#draftDocumentJson(
+    name='draftDocumentJson', type='hidden', value= draftDocumentJson)
+
+  input#docUid(
+    name='docUid', type='hidden')
+
+  input#viewStatus(
+    name='viewStatus', type='hidden', value=viewStatus)
+
+  input#approvalLineJson(
+    name='approvalLineJson', type='name')
+
   script(src='/js/apprDraftDocument.js')

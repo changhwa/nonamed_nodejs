@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var model = require('../model');
+Sequelize = require('sequelize');
 
 router.get('/', function(req, res) {
     res.render('approval/apprMain', { title: '전자결재' });
@@ -17,20 +18,41 @@ router.get('/apprDraftDocument', function(req, res) {
 });
 
 router.post('/apprDraftDocument/create', function(req, res){
-    var reqDraftDocument = model.DraftDocument.build({
-        //docUid: req.body.docUid,
-        subject: req.body.subject,
-        contents: req.body.contents
-    });
+    var draftDocumentJsonArr = JSON.parse(req.body.draftDocumentJson);
+    var approvalLineJsonArr = JSON.parse(req.body.approvalLineJson);
 
-    reqDraftDocument
-        .save()
-        .success(function(){
+    var approvalLineUidArr = [];
+    for (var i in approvalLineJsonArr){
+        approvalLineUidArr.push(approvalLineJsonArr[i].approvalLineUid);
+    };
+
+    var chainer = new Sequelize.Utils.QueryChainer();
+    chainer
+        .add(model.ApprovalLine.bulkCreate(approvalLineJsonArr))
+        .add(model.DraftDocument.bulkCreate(draftDocumentJsonArr))
+        .runSerially()
+        //.run()
+        .success(function(result) {
+            var approvalLineArr = result[0];
+            var draftDocumentArr = result[1];
+
+            var approvalLineUidArr = [];
+            for (var i in approvalLineArr){
+                approvalLineUidArr.push(approvalLineArr[i].approvalLineUid);
+            };
+
+            draftDocumentArr[0].setApprovalLine(approvalLineUidArr);
             res.send({ msg: "create success" });
         })
-        .error(function(errors){
-            console.log(errors);
-            res.send({ msg: "create fail" })
+        .error(function(errors) {
+            if (0 < errors.length){
+                for (var i in errors){
+                    console.log(">>>>> "+ errors[i].parent.message);
+                }
+            } else {
+                console.log(">>>>> "+errors);
+            }
+            res.send({ msg: "error" });
         });
 });
 

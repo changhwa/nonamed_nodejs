@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports  = function(sequelize, DataTypes) {
+    var ApprovalLine = sequelize.import(__dirname + "/approvalLine");
     var DraftDocument = sequelize.define("DraftDocument", {
         docUid: {
             //type: DataTypes.STRING,
@@ -16,5 +17,11 @@ module.exports  = function(sequelize, DataTypes) {
         timestamps: false,
         tableName: 'draftDocument'
     });
+
+    DraftDocument.hasMany(ApprovalLine, {
+        as: 'ApprovalLine',
+        foreignKey: 'docUid'
+    });
+
     return DraftDocument;
 };
