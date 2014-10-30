@@ -22,10 +22,13 @@ module.exports  = function(sequelize, DataTypes) {
     },{
         underscored: true,
         timestamps: false,
-        tableName: 'Department'
+        tableName: 'Department',
+        "classMethods" : {
+            "associate" : function (models) {
+                models.Department.hasMany(models.User, { "through" :models.DeptUser });
+            }
+        }
     });
 
-    Department.hasMany(User, { through: DeptUser });
-    User.hasMany(Department, { through: DeptUser });
     return Department;
 };
