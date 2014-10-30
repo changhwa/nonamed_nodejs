@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var model = require('../model');
 
+/* GET home page. */
+router.get('/', function(req, res) {
+    res.render('organization/login');
+});
+
 /* GET users listing. */
 router.post('/create',function(req,res){
     var user = model.User.build({
@@ -38,6 +43,18 @@ router.post('/move',function(req,res){
         }).catch(function(e){
             console.log(e);
             res.send({msg: "조직도변경에 실패하였습니다."});
+        });
+});
+
+router.post('/login' ,function(req,res){
+    model.User.find({   attributes : ['code','name','office','position','security_grade'],
+                        where:{code:req.body.code, passwd: req.body.passwd},
+                        include:[model.Department]})
+        .then(function(_user){
+            req.session.user = _user.dataValues;
+            res.send({msg: "로그인에 성공하였습니다" , loginYn : true});
+        }).catch(function(e){
+            res.send({msg: "로그인에 실패하였습니다" , loginYn : false})
         });
 });
 
