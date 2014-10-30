@@ -24,12 +24,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(express.static(path.join(__dirname, 'src/main/public')));
-app.set('trust proxy', 1); // trust first proxy
 app.use(session({
     secret: 'nonamed',
     resave: false, //TODO : 옵션 기본값은 true 확인해보기
-    saveUninitialized: false, //TODO : 옵션 기본값은 true 확인해보기
-    cookie: { secure: true }
+    saveUninitialized: true //TODO : 옵션 기본값은 true 확인해보기
 }));
 
 
