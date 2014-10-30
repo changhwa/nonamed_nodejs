@@ -1,26 +1,27 @@
 module.exports = {
     up: function(migration, DataTypes, done) {
         migration.createTable(
-            'users',
+            'department',
             {
                 code: {
                     type: DataTypes.STRING(20),
                     primaryKey: true
                 },
-                passwd: {
+                dept_name: {
                     type: DataTypes.STRING(20),
                     allowNull: false
                 },
-                name: DataTypes.STRING(10),
-                auth_key: DataTypes.STRING,
-                office: DataTypes.STRING(100),
-                position: DataTypes.STRING(100),
-                security_grade: DataTypes.STRING(1)
+                use_yn : {
+                    type: DataTypes.STRING(1),
+                    defaultValue: 'Y'
+                },
+                parent_dept_code: DataTypes.STRING(20)
             },
             {
                 charset: 'utf8'
             }
         ).complete(done);
+
     },
 
     down: function(migration, DataTypes, done) {
