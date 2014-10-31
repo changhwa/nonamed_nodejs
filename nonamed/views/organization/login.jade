@@ -1,0 +1,48 @@
+extends ../layout
+block content
+  #page_login.row
+    .col-xs-12.col-md-4.col-md-offset-4.col-sm-6.col-sm-offset-3(style="margin-top: 100px;")
+      .box
+        .box-content
+          .text-center
+            h3.page-header Login
+          .form-group
+            label.control-label 사원번호
+            input.form-control(type="text" id="code" name="code")
+          .form-group
+            label.control-label Password
+            input.form-control(type="password" id="passwd" name="passwd")
+          .text-center
+            a#login_btn.btn.btn-primary(href="#") Sign in
+  script(type="text/javascript").
+    $(function(){
+      $("#page_login").on("click", "#login_btn", function(){
+          var $code = $("#code");
+          var $passwd = $("#passwd");
+
+          if($code.val() =='' || $passwd.val() == ''){
+            alert('사원번호,비밀번호를 입력해주세요.')
+            return false;
+          }
+
+          $.ajax({
+            type:"POST",
+            url : "http://localhost:3000/users/login",
+            data: {code: $code.val(), passwd: $passwd.val()},
+            dataType: 'json',
+            success:function(args){
+                alert(args.msg);
+                if(args.loginYn){
+                    location.href="/";
+                } else {
+                    $code.val('');
+                    $passwd.val('');
+                }
+            },
+            error: function(e){
+
+            }
+          });
+
+      });
+    });

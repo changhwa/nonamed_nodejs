@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./src/main/routes/index');
 var users = require('./src/main/routes/users');
@@ -23,6 +24,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(express.static(path.join(__dirname, 'src/main/public')));
+app.use(session({
+    secret: 'nonamed',
+    resave: false, //TODO : 옵션 기본값은 true 확인해보기
+    saveUninitialized: true //TODO : 옵션 기본값은 true 확인해보기
+}));
+
 
 app.use('/', routes);
 app.use('/users', users);

@@ -18,7 +18,12 @@ module.exports  = function(sequelize, DataTypes) {
     },{
         underscored: true,
         timestamps: false,
-        tableName: 'users'
+        tableName: 'users',
+        "classMethods" : {
+            "associate" : function (models) {
+                models.User.hasMany(models.Department, { "through" :models.DeptUser });
+            }
+        }
     });
     return User;
 };
