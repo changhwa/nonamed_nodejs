@@ -32,7 +32,12 @@ module.exports  = function(sequelize, DataTypes) {
     },{
         underscored: true,
         timestamps: false,
-        tableName: 'sns_message'
+        tableName: 'sns_message',
+        "classMethods" : {
+            "associate" : function (models) {
+                models.snsMessage.hasMany(models.snsMessageAuth);
+            }
+        }
     });
 
     return snsMessage;
