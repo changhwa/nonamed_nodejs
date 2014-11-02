@@ -57,22 +57,32 @@ router.post('/apprDraftDocument/create', function(req, res){
 });
 
 router.get('/apprDraftDocument/read', function(req, res){
-    var docUid = "56a9fd40-5df1-11e4-af09-3f0ff240fb97";
+    var docUid = "88b0a8c0-5fd1-11e4-98fb-0f0793958277";
+    var resultObj = {};
 
     model.DraftDocument.find({
-        where: { docUid: docUid }
+        where: {docUid: docUid}
 
-    }).success(function(draftDocument) {
-        var draftDocumentJson = JSON.stringify(draftDocument);
-        res.render(
-            'approval/apprDraftDocument',
-            {
-                title: "문서조회",
-                draftDocumentJson: draftDocumentJson,
-                viewStatus: 'read'
-            }
-        );
-    });
+    }).then(function(_draftDocument){
+        resultObj.draftDocument = _draftDocument;
+        return _draftDocument;
+
+    }).then(function(_draftDocument){
+        return _draftDocument.getApprovalLine();
+
+    }).then(function(_approvalLine) {
+        resultObj.approvalLine = _approvalLine;
+        return resultObj;
+
+    }).then(function(resultObj){
+            res.render(
+                'approval/apprDraftDocument',
+                {
+                    draftDocumentJson: JSON.stringify(resultObj.draftDocument),
+                    approvalLineJson : JSON.stringify(resultObj.approvalLine)
+                }
+            );
+        });
 });
 
 router.post('/apprDraftDocument/update', function(req, res){
