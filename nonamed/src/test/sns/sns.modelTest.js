@@ -18,6 +18,14 @@ describe('SNS TEST', function () {
                 done();
             });
         });
+        after(function(done){
+            model.snsMessage.drop({
+                force: true,
+                cascade: false
+            }).then(function(){
+                done();
+            });
+        });
 
         it('should get sns message find by msg_id', function (done) {
             this.timeout(1000);
