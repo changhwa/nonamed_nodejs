@@ -9,11 +9,13 @@
         "timezone": "+09:00"
     },
     "test": {
-        "username": "root",
-        "password": null,
-        "database": "database_test",
+        "username": "nonamed",
+        "password": "@nonamed!",
+        "database": "nonamed",
         "host": "127.0.0.1",
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "logging": false,
+        "timezone": "+09:00"
     },
     "production": {
         "username": "root",
