@@ -26,6 +26,9 @@ function initBtn(){
             break;
 
         case "read":
+            break;
+
+        case "update":
             displayElement($("#btnUpdateDraft"), "show");
             displayElement($("#btnDeleteDraft"), "show");
             break;

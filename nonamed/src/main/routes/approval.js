@@ -79,7 +79,8 @@ router.post('/apprDraftDocument/read', function(req, res){
             'approval/apprDraftDocument',
             {
                 draftDocumentJson: JSON.stringify(resultObj.draftDocument),
-                approvalLineJson : JSON.stringify(resultObj.approvalLine)
+                approvalLineJson: JSON.stringify(resultObj.approvalLine),
+                viewStatus: req.body.viewStatus
             }
         );
     });

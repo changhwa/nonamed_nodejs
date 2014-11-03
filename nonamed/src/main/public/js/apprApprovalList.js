@@ -27,14 +27,15 @@ $(document).ready(function(){
             var aPos = oTable.fnGetPosition(this);
             var aData = oTable.fnGetData(aPos[0]);
             $("#selectedDocUid").val(aData.docUid);
-            fnFowardDraftDocument();
+            fnForwardDraftDocument();
         } );
     }
 
     $("#draftDocumentsTable_length").remove();      // 리스트 개수 Div
 });
 
-function fnFowardDraftDocument(){
+function fnForwardDraftDocument(){
+    $('#viewStatus').val('update');
     $('#approvalListForm').attr({
         action: '/approval/apprDraftDocument/read',
         method: 'post'
