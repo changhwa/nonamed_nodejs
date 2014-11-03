@@ -7,22 +7,27 @@ block content
       div.row.panel-heading
         | 결재 목록
       div.row.panel-body
-        form(role='form').col-lg-6
+        form#approvalListForm(name='approvalListForm', role='form').col-lg-6
           div
-            input#btnHistoryBack.btn.btn-default(name='btnHistoryBack', type='button', value='뒤로')
+            input#btnHistoryBack.btn.btn-default(
+              name='btnHistoryBack', type='button', value='뒤로')
           table.table.table-striped.table-bordered#draftDocumentsTable(name='draftDocumentsTable')
             thead
               tr
-                //th docUid
+                th docUid
                 th subject
                 th contents
-            tfoot
-              tr
-                //th docUid
-                th subject
-                th contents
-  input#draftDocumentsJson(name='draftDocumentsJson', type='hidden', value= draftDocumentsJson)
-  input#docUid(name='docUid', type='hidden')
-  input#viewStatus(name='viewStatus', type='hidden', value=viewStatus)
+            //tfoot
+            //  tr
+            //    th docUid
+            //    th subject
+            //    th contents
+          input#draftDocumentsJson(
+            name='draftDocumentsJson', type='hidden', value=draftDocumentsJson)
+          input#viewStatus(
+            name='viewStatus', type='hidden', value=viewStatus)
+          input#selectedDocUid(
+            name='selectedDocUid', type='hidden')
+
   script(src='/js/apprApprovalList.js')
   script(src='http://cdn.datatables.net/1.10.3/js/jquery.dataTables.min.js')

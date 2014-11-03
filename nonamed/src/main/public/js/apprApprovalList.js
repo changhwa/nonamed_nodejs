@@ -6,21 +6,37 @@ $(document).ready(function(){
         history.back();
     });
 
-
-    // TODO: jquery로 구현예정
     var draftDocumentsJson = $("#draftDocumentsJson").val();
-    var dataSet = $.parseJSON(draftDocumentsJson);
+    var data = $.parseJSON(draftDocumentsJson);
 
     if ("" != draftDocumentsJson) {
         $('#draftDocumentsTable').dataTable({
-            "data": dataSet,
+            data: data,
             columns: [
-                //{ data: 'docUid' },
-                { data: 'subject' },
-                { data: 'contents' }
-            ]
+                {data: 'docUid'},
+                {data: 'subject'},
+                {data: 'contents'}],
+            columnDefs: [{
+                "targets": [0], //docUid
+                "bVisible": false,
+                "searchable": false}]
         });
+
+        var oTable = $('#draftDocumentsTable').dataTable();
+        $('#draftDocumentsTable tbody td').click(function() {
+            var aPos = oTable.fnGetPosition(this);
+            var aData = oTable.fnGetData(aPos[0]);
+            $("#selectedDocUid").val(aData.docUid);
+            fnFowardDraftDocument();
+        } );
     }
 
-    $("#draftDocumentsTable_length").remove();      // 리스트 개수
+    $("#draftDocumentsTable_length").remove();      // 리스트 개수 Div
 });
+
+function fnFowardDraftDocument(){
+    $('#approvalListForm').attr({
+        action: '/approval/apprDraftDocument/read',
+        method: 'post'
+    }).submit();
+}

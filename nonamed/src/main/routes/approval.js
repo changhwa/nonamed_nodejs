@@ -56,8 +56,8 @@ router.post('/apprDraftDocument/create', function(req, res){
         });
 });
 
-router.get('/apprDraftDocument/read', function(req, res){
-    var docUid = "88b0a8c0-5fd1-11e4-98fb-0f0793958277";
+router.post('/apprDraftDocument/read', function(req, res){
+    var docUid = req.body.selectedDocUid;
     var resultObj = {};
 
     model.DraftDocument.find({
@@ -75,14 +75,14 @@ router.get('/apprDraftDocument/read', function(req, res){
         return resultObj;
 
     }).then(function(resultObj){
-            res.render(
-                'approval/apprDraftDocument',
-                {
-                    draftDocumentJson: JSON.stringify(resultObj.draftDocument),
-                    approvalLineJson : JSON.stringify(resultObj.approvalLine)
-                }
-            );
-        });
+        res.render(
+            'approval/apprDraftDocument',
+            {
+                draftDocumentJson: JSON.stringify(resultObj.draftDocument),
+                approvalLineJson : JSON.stringify(resultObj.approvalLine)
+            }
+        );
+    });
 });
 
 router.post('/apprDraftDocument/update', function(req, res){
