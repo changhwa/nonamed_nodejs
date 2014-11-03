@@ -1,35 +1,35 @@
 BASE_DRAFT_DOCUMENT_URL="/approval/apprDraftDocument/";
 
 $(document).ready(function(){
-  $("#btnHistoryBack").click(function(event){
-    event.preventDefault();
-    history.back();
-  });
+    $("#btnHistoryBack").click(function(event){
+        event.preventDefault();
+        history.back();
+    });
 
-  $("#btnDoDraft").click(function(){doDraft();});
-  $("#btnUpdateDraft").click(function(){updateDraft();});
-  $("#btnDeleteDraft").click(function(){deleteDraft();});
-  $("#btnSetApprovalLine").click(function(){displayApprovalLine();});
+    $("#btnDoDraft").click(function(){doDraft();});
+    $("#btnUpdateDraft").click(function(){updateDraft();});
+    $("#btnDeleteDraft").click(function(){deleteDraft();});
+    $("#btnSetApprovalLine").click(function(){displayApprovalLine();});
 
-  initBtn();
-  getDraftDocumentInfo();
+    initBtn();
+    getDraftDocumentInfo();
 });
 
 /**
  * 버튼 초기화
  */
 function initBtn(){
-  switch($("#viewStatus").val()){
-    case "create":
-      displayElement($("#btnDoDraft"), "show");
-      displayElement($("#btnSetApprovalLine"), "show");
-      break;
+    switch($("#viewStatus").val()){
+        case "create":
+            displayElement($("#btnDoDraft"), "show");
+            displayElement($("#btnSetApprovalLine"), "show");
+            break;
 
-    case "read":
-      displayElement($("#btnUpdateDraft"), "show");
-      displayElement($("#btnDeleteDraft"), "show");
-      break;
-  }
+        case "read":
+            displayElement($("#btnUpdateDraft"), "show");
+            displayElement($("#btnDeleteDraft"), "show");
+            break;
+    }
 }
 
 /**
@@ -202,41 +202,43 @@ function displayElement(id, mode){
 }
 
 function displayApprovalLine(){
-  //TODO: 결재선 div 호출
+    //TODO: 결재선 div 호출
 
-  setApprovalLine();
+    setApprovalLine();
 }
 
 function setApprovalLine(){
-  var result = JSON.stringify(dataSetApprovalLine);
-  $("#approvalLineJson").val(result);
+    var result = JSON.stringify(dataSetApprovalLine);
+    var approvalLineJson = $("#approvalLineJson");
+    approvalLineJson.val(result);
+
+    if ("" != approvalLineJson.val()){
+        alert('결재선을 지정하였습니다.');
+    } else {
+        alert('결재선 지정에 실패하였습니다.');
+    }
 }
 
-var dataSetApprovalLine =
-  [
+var dataSetApprovalLine =[
     {
-      "approvalLineUid": "uid0",
-      "approverEmail": "money0@nonamed.io",
-      "approverName": "돈영원",
-      "approverOrder": "0",
-      "approverAppCd": "0",
-      "approverAppName": "결재대기"
-    },
-    {
-      "approvalLineUid": "uid1",
-      "approverEmail": "money1@nonamed.io",
-      "approverName": "돈일원",
-      "approverOrder": "1",
-      "approverAppCd": "0",
-      "approverAppName": "결재대기"
-    },
-    {
-      "approvalLineUid": "uid2",
-      "approverEmail": "money2@nonamed.io",
-      "approverName": "돈이원",
-      "approverOrder": "2",
-      "approverAppCd": "0",
-      "approverAppName": "결재대기"
-    }
-  ]
-;
+        "approvalLineUid": "uid0",
+        "approverEmail": "money0@nonamed.io",
+        "approverName": "돈영원",
+        "approverOrder": "0",
+        "approverAppCd": "0",
+        "approverAppName": "결재대기"
+    },{
+        "approvalLineUid": "uid1",
+        "approverEmail": "money1@nonamed.io",
+        "approverName": "돈일원",
+        "approverOrder": "1",
+        "approverAppCd": "0",
+        "approverAppName": "결재대기"
+    },{
+        "approvalLineUid": "uid2",
+        "approverEmail": "money2@nonamed.io",
+        "approverName": "돈이원",
+        "approverOrder": "2",
+        "approverAppCd": "0",
+        "approverAppName": "결재대기"
+    }];
