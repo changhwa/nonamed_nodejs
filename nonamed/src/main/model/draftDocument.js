@@ -4,10 +4,8 @@ module.exports  = function(sequelize, DataTypes) {
     var ApprovalLine = sequelize.import(__dirname + "/approvalLine");
     var DraftDocument = sequelize.define("DraftDocument", {
         docUid: {
-            //type: DataTypes.STRING,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV1,
-            //allowNull: false,
             primaryKey: true
         },
         subject: DataTypes.STRING,

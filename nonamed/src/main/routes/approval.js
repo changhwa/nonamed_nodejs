@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var model = require('../model');
+var express = require('express'),
+    router = express.Router(),
+    model = require('../model'),
+    apprNs = require('../public/js/apprNs.js');
+
 Sequelize = require('sequelize');
-var apprNs = "";
-apprNs = require('../public/js/apprNs.js');
 apprNs = apprNs.obj;
 
 router.get('/', function(req, res) {
@@ -11,9 +11,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/apprDraftDocument', function(req, res) {
-    res.render(
-        'approval/apprDraftDocument',
-        {
+    res.render('approval/apprDraftDocument',{
             title: '기안문 작성',
             viewStatus: 'create'
         }
@@ -21,29 +19,28 @@ router.get('/apprDraftDocument', function(req, res) {
 });
 
 router.post('/apprDraftDocument/create', function(req, res){
-    var draftDocumentJsonArr = JSON.parse(req.body.draftDocumentJson);
-    var approvalLineJsonArr = JSON.parse(req.body.approvalLineJson);
+    var draftDocumentJsonArr = JSON.parse(req.body.draftDocumentJson),
+        approvalLineJsonArr = JSON.parse(req.body.approvalLineJson),
+        approvalLineUidArr = [],
+        chainer = new Sequelize.Utils.QueryChainer();
 
-    var approvalLineUidArr = [];
     for (var i in approvalLineJsonArr){
         approvalLineUidArr.push(approvalLineJsonArr[i].approvalLineUid);
-    };
+    }
 
-    var chainer = new Sequelize.Utils.QueryChainer();
     chainer
         .add(model.ApprovalLine.bulkCreate(approvalLineJsonArr))
         .add(model.DraftDocument.bulkCreate(draftDocumentJsonArr))
         .runSerially()
         //.run()
         .success(function(result) {
-            var approvalLineArr = result[0];
-            var draftDocumentArr = result[1];
+            var approvalLineArr = result[0],
+                draftDocumentArr = result[1],
+                approvalLineUidArr = [];
 
-            var approvalLineUidArr = [];
             for (var i in approvalLineArr){
                 approvalLineUidArr.push(approvalLineArr[i].approvalLineUid);
-            };
-
+            }
             draftDocumentArr[0].setApprovalLine(approvalLineUidArr);
             res.send({ msg: "create success" });
         })
@@ -55,32 +52,26 @@ router.post('/apprDraftDocument/create', function(req, res){
             } else {
                 console.log(">>>>> "+errors);
             }
-            res.send({ msg: "error" });
+            res.send({msg: "error"});
         });
 });
 
 router.post('/apprDraftDocument/read', function(req, res){
-    var docUid = req.body.selectedDocUid;
-    var resultObj = {};
+    var docUid = req.body.selectedDocUid,
+        resultObj = {};
 
     model.DraftDocument.find({
         where: {docUid: docUid}
-
     }).then(function(_draftDocument){
         resultObj.draftDocument = _draftDocument;
         return _draftDocument;
-
     }).then(function(_draftDocument){
         return _draftDocument.getApprovalLine();
-
     }).then(function(_approvalLine) {
         resultObj.approvalLine = _approvalLine;
         return resultObj;
-
     }).then(function(resultObj){
-        res.render(
-            'approval/apprDraftDocument',
-            {
+        res.render('approval/apprDraftDocument',{
                 draftDocumentJson: JSON.stringify(resultObj.draftDocument),
                 approvalLineJson: JSON.stringify(resultObj.approvalLine),
                 viewStatus: req.body.viewStatus
@@ -97,15 +88,14 @@ router.post('/apprDraftDocument/update', function(req, res){
     });
 
     model.DraftDocument.find({
-        where: { docUid: reqDraftDocument.docUid }
-
+        where: {docUid: reqDraftDocument.docUid}
     }).success(function(draftDocument) {
         draftDocument
             .updateAttributes({
                 subject: reqDraftDocument.subject,
                 contents: reqDraftDocument.contents
             })
-            .success(function() {
+            .success(function(){
                 var draftDocumentJson = JSON.stringify(draftDocument);
                 res.send({
                     msg: "update success",
@@ -116,18 +106,13 @@ router.post('/apprDraftDocument/update', function(req, res){
 });
 
 router.post('/apprDraftDocument/delete', function(req, res){
-    var reqDraftDocument = model.DraftDocument.build({
-        docUid: req.body.docUid
-    });
-
     model.DraftDocument.find({
-        where: { docUid: reqDraftDocument.docUid }
-
+        where: {docUid: req.body.docUid}
     }).success(function(draftDocument){
         draftDocument
             .destroy()
             .success(function(){
-                res.send({ msg: "delete success" });
+                res.send({msg: "delete success"});
             });
     });
 });
@@ -139,15 +124,12 @@ router.post('/apprApprovalList', function(req, res){
         case apprNs.APPROVAL_LIST_TYPE.wait:
             fnApprovalWaitList(req, res);
             break;
-
         case apprNs.APPROVAL_LIST_TYPE.ongoing:
             alert('ongoing');
             break;
-
         case apprNs.APPROVAL_LIST_TYPE.finish:
             alert('finish');
             break;
-
         default:
             alert('fail');
             break;
@@ -159,12 +141,10 @@ var fnApprovalWaitList = function(req, res){
         where: {
             approverEmail: "money1@nonamed.io",
             approverAppCd: apprNs.APPROVAL_LINE.approverAppCd.wait
-
         }, include: [{
             model: model.DraftDocument,
             required: true
         }]
-
     }).then(function(_waitList){
         var draftDocuments = [],
             approvalLines = [];
@@ -172,23 +152,20 @@ var fnApprovalWaitList = function(req, res){
         for (var i in _waitList){
             draftDocuments.push(_waitList[i].DraftDocument.dataValues);
             approvalLines.push(_waitList[i].dataValues);
-        };
+        }
 
-        var data = {
+        return {
             draftDocuments: draftDocuments,
             approvalLines: approvalLines
         };
-        return data;
-
     }).then(function (_data){
-        res.render(
-            "approval/apprApprovalList",{
+        res.render("approval/apprApprovalList", {
                 title: "결재대기목록",
                 draftDocumentsJson: JSON.stringify(_data.draftDocuments),
                 approvalLineJson: JSON.stringify(_data.approvalLines)
             }
         )
     });
-}
+};
 
 module.exports = router;

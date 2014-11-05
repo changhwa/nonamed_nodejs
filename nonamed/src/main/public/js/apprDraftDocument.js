@@ -24,10 +24,8 @@ function initBtn(){
             displayElement($("#btnDoDraft"), "show");
             displayElement($("#btnSetApprovalLine"), "show");
             break;
-
         case "read":
             break;
-
         case "update":
             displayElement($("#btnUpdateDraft"), "show");
             displayElement($("#btnDeleteDraft"), "show");
@@ -40,7 +38,6 @@ function initBtn(){
  */
 function doDraft(){
     var draftDocument = {
-        //"docUid": getDocKey(),    //uuid로 변경
         "subject": $("#subject").val(),
         "contents": $("#contents").val()
     };
@@ -71,15 +68,14 @@ function doDraft(){
  * 기안문서 조회
  */
 function getDraftDocumentInfo(jsonData){
-    if ("create" == $("#viewStatus").val()) { return; }
+    if ("create" == $("#viewStatus").val()) {return;}
 
-    var selectorDraftDocumentJson = $("#draftDocumentJson");
-    var draftDocumentJson = "";
+    var selectorDraftDocumentJson = $("#draftDocumentJson"),
+        draftDocumentJson = "";
 
     if (('undefined' != typeof(jsonData)) && ("" != jsonData)){
         selectorDraftDocumentJson.val(jsonData);
         draftDocumentJson = selectorDraftDocumentJson.val();
-
     } else {
         draftDocumentJson = selectorDraftDocumentJson.val();
     }
@@ -189,7 +185,6 @@ function displayElement(id, mode){
     if (true == id.hasClass('hidden')){
         if ("show" == mode){
             id.removeClass('hidden');
-
         } else if ("hide" == mode){
             id.addClass('hidden');
         }
@@ -197,7 +192,6 @@ function displayElement(id, mode){
     } else {
         if ("show" == mode){
             id.display.show();
-
         } else if ("hide" == mode){
             id.display.hide();
         }
@@ -222,8 +216,8 @@ function setApprovalLine(){
     }
 }
 
-var dataSetApprovalLine =[
-    {
+var dataSetApprovalLine =
+    [{
         "approvalLineUid": "uid0",
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
@@ -243,8 +237,8 @@ var dataSetApprovalLine =[
         "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.none
     }];
 
-var dataSetApprovalLine2 =[
-    {
+var dataSetApprovalLine2 =
+    [{
         "approvalLineUid": "uid3",
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
