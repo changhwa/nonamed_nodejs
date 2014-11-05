@@ -8,11 +8,18 @@ block content
       div.panel-heading
         |메뉴 목록
       div.row.panel-body
-        form.col-lg-6
+        form#mainForm(name='mainForm').col-lg-6
           div
             input#writeDraftDoc.btn.btn-default(
               name="writeDraftDoc", type='button', value='기안문 작성')
           div
+            input#waitListDraftDoc.btn.btn-default(
+              name="waitListDraftDoc", type='button', value='기안문 대기목록')
+          div
             input#listDraftDoc.btn.btn-default(
               name="listDraftDoc", type='button', value='기안문 목록')
+
+          input#listType(name='listType', type='hidden')
+          input#loginId(name='loginId', type='hidden')
+  script(src='/js/apprNs.js')
   script(src='/js/apprMain.js')

@@ -15,12 +15,15 @@ module.exports  = function(sequelize, DataTypes) {
     },{
         underscored: true,
         timestamps: false,
-        tableName: 'draftDocument'
-    });
-
-    DraftDocument.hasMany(ApprovalLine, {
-        as: 'ApprovalLine',
-        foreignKey: 'docUid'
+        tableName: 'draftDocument',
+        classMethods:{
+            associate:function(models){
+                DraftDocument.hasMany(models.ApprovalLine, {
+                    as: 'ApprovalLine',
+                    foreignKey: 'docUid'
+                });
+            }
+        }
     });
 
     return DraftDocument;

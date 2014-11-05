@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var model = require('../model');
 Sequelize = require('sequelize');
+var apprNs = "";
+apprNs = require('../public/js/apprNs.js');
+apprNs = apprNs.obj;
 
 router.get('/', function(req, res) {
     res.render('approval/apprMain', { title: '전자결재' });
@@ -129,21 +132,63 @@ router.post('/apprDraftDocument/delete', function(req, res){
     });
 });
 
-router.get('/apprApprovalList', function(req, res){
-    var reqDraftDocument = model.DraftDocument.build({
-        // 조건
-    });
+router.post('/apprApprovalList', function(req, res){
+    var listType = req.body.listType;
 
-    model.DraftDocument.findAll().success(function(draftDocuments) {
-        var draftDocumentsJson = JSON.stringify(draftDocuments)
+    switch(listType){
+        case apprNs.APPROVAL_LIST_TYPE.wait:
+            fnApprovalWaitList(req, res);
+            break;
+
+        case apprNs.APPROVAL_LIST_TYPE.ongoing:
+            alert('ongoing');
+            break;
+
+        case apprNs.APPROVAL_LIST_TYPE.finish:
+            alert('finish');
+            break;
+
+        default:
+            alert('fail');
+            break;
+    }
+});
+
+var fnApprovalWaitList = function(req, res){
+    model.ApprovalLine.findAll({
+        where: {
+            approverEmail: "money1@nonamed.io",
+            approverAppCd: apprNs.APPROVAL_LINE.approverAppCd.wait
+
+        }, include: [{
+            model: model.DraftDocument,
+            required: true
+        }]
+
+    }).then(function(_waitList){
+        var draftDocuments = [],
+            approvalLines = [];
+
+        for (var i in _waitList){
+            draftDocuments.push(_waitList[i].DraftDocument.dataValues);
+            approvalLines.push(_waitList[i].dataValues);
+        };
+
+        var data = {
+            draftDocuments: draftDocuments,
+            approvalLines: approvalLines
+        };
+        return data;
+
+    }).then(function (_data){
         res.render(
-            "approval/apprApprovalList",
-            {
-                title: "결재목록",
-                draftDocumentsJson: draftDocumentsJson
+            "approval/apprApprovalList",{
+                title: "결재대기목록",
+                draftDocumentsJson: JSON.stringify(_data.draftDocuments),
+                approvalLineJson: JSON.stringify(_data.approvalLines)
             }
         )
     });
-});
+}
 
 module.exports = router;

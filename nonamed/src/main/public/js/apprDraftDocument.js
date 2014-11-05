@@ -228,20 +228,38 @@ var dataSetApprovalLine =[
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
         "approverOrder": "0",
-        "approverAppCd": "0",
-        "approverAppName": "결재대기"
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.finish
     },{
         "approvalLineUid": "uid1",
         "approverEmail": "money1@nonamed.io",
         "approverName": "돈일원",
         "approverOrder": "1",
-        "approverAppCd": "0",
-        "approverAppName": "결재대기"
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.wait
     },{
         "approvalLineUid": "uid2",
         "approverEmail": "money2@nonamed.io",
         "approverName": "돈이원",
         "approverOrder": "2",
-        "approverAppCd": "0",
-        "approverAppName": "결재대기"
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.none
+    }];
+
+var dataSetApprovalLine2 =[
+    {
+        "approvalLineUid": "uid3",
+        "approverEmail": "money0@nonamed.io",
+        "approverName": "돈영원",
+        "approverOrder": "0",
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.finish
+    },{
+        "approvalLineUid": "uid4",
+        "approverEmail": "money1@nonamed.io",
+        "approverName": "돈일원",
+        "approverOrder": "1",
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.wait
+    },{
+        "approvalLineUid": "uid5",
+        "approverEmail": "money2@nonamed.io",
+        "approverName": "돈이원",
+        "approverOrder": "2",
+        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.none
     }];

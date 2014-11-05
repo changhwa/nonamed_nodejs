@@ -40,7 +40,15 @@ module.exports  = function(sequelize, DataTypes) {
     },{
         underscored: true,
         timestamps: false,
-        tableName: 'approvalLine'
+        tableName: 'approvalLine',
+        classMethods:{
+            associate:function(models){
+                ApprovalLine.belongsTo(models.DraftDocument, {
+                    foreignKey: 'docUid'
+                });
+            }
+        }
     });
+
     return ApprovalLine;
 };
