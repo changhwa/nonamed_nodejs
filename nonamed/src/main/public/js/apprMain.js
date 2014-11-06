@@ -8,7 +8,11 @@ $(document).ready(function(){
     });
 
     $('#waitListDraftDoc').click(function(){
-        fnForwardWaitList();
+        fnForwardList(fnSetStatusWaitList);
+    });
+
+    $('#ongoingListDraftDoc').click(function(){
+        fnForwardList(fnSetStatusOngoingList);
     });
 
     $('#listDraftDoc').click(function(){
@@ -16,13 +20,24 @@ $(document).ready(function(){
     });
 });
 
-function fnForwardWaitList(){
-    var tempId = "money1@nonamed.io";
-    $('#listType').val(APPROVAL_LIST_TYPE.wait);
-    $('#loginId').val(tempId);
+var fnForwardList = function(fnSetStatus){
+    fnSetStatus();
+//    $('#loginUserCode').val("sessionLoginId");
 
     $('#mainForm').attr({
         action: "/approval/apprApprovalList",
         method: "post"
     }).submit();
-}
+};
+
+var fnSetStatusWaitList = function(){
+    $('#loginUserCode').val("money1@nonamed.io"); //temp
+    $('#listType').val(APPROVAL_LIST_TYPE.wait);
+    $('#approverAppCd').val(APPROVAL_LINE.approverAppCd.wait);
+};
+
+var fnSetStatusOngoingList = function(){
+    $('#loginUserCode').val("");  //temp
+    $('#listType').val(APPROVAL_LIST_TYPE.ongoing);
+    $('#approverAppCd').val("");
+};

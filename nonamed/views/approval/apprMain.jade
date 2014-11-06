@@ -16,10 +16,14 @@ block content
             input#waitListDraftDoc.btn.btn-default(
               name="waitListDraftDoc", type='button', value='기안문 대기목록')
           div
+            input#ongoingListDraftDoc.btn.btn-default(
+              name="ongoingListDraftDoc", type='button', value='기안문 진행목록')
+          div //TODO:완료목록으로 변경예정
             input#listDraftDoc.btn.btn-default(
               name="listDraftDoc", type='button', value='기안문 목록')
 
           input#listType(name='listType', type='hidden')
-          input#loginId(name='loginId', type='hidden')
+          input#loginUserCode(name='loginUserCode', type='hidden')
+          input#approverAppCd(name='approverAppCd', type='hidden')
   script(src='/js/apprNs.js')
   script(src='/js/apprMain.js')

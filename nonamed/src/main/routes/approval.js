@@ -118,30 +118,29 @@ router.post('/apprDraftDocument/delete', function(req, res){
 });
 
 router.post('/apprApprovalList', function(req, res){
-    var listType = req.body.listType;
+    var listType = req.body.listType,
+        approverEmail = req.body.loginUserCode,
+        approverAppCd = req.body.approverAppCd,
+        conditionObj = {};
 
-    switch(listType){
-        case apprNs.APPROVAL_LIST_TYPE.wait:
-            fnApprovalWaitList(req, res);
+    switch (listType){
+        case (apprNs.APPROVAL_LIST_TYPE.wait):
+            conditionObj = {
+                approverEmail: approverEmail,
+                approverAppCd: approverAppCd
+            };
             break;
-        case apprNs.APPROVAL_LIST_TYPE.ongoing:
-            alert('ongoing');
-            break;
-        case apprNs.APPROVAL_LIST_TYPE.finish:
-            alert('finish');
+        case (apprNs.APPROVAL_LIST_TYPE.ongoing):
+            conditionObj = "";
             break;
         default:
-            alert('fail');
+            conditionObj = "";
             break;
     }
-});
 
-var fnApprovalWaitList = function(req, res){
     model.ApprovalLine.findAll({
-        where: {
-            approverEmail: "money1@nonamed.io",
-            approverAppCd: apprNs.APPROVAL_LINE.approverAppCd.wait
-        }, include: [{
+        where: conditionObj,
+        include: [{
             model: model.DraftDocument,
             required: true
         }]
@@ -160,12 +159,13 @@ var fnApprovalWaitList = function(req, res){
         };
     }).then(function (_data){
         res.render("approval/apprApprovalList", {
-                title: "결재대기목록",
+                title: listType + " List",
+                listType: listType,
                 draftDocumentsJson: JSON.stringify(_data.draftDocuments),
                 approvalLineJson: JSON.stringify(_data.approvalLines)
             }
         )
     });
-};
+});
 
 module.exports = router;
