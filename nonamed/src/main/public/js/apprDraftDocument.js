@@ -123,6 +123,8 @@ function doDraft(){
         "approvalLineJson": $("#approvalLineJson").val()
     };
 
+    //TODO: data를 string으로 변환하지 않고, jquery옵션사용($.ajaxSettings.traditional)
+
     $.ajax({
         type: "POST",
         url: BASE_DRAFT_DOCUMENT_URL + "create",
@@ -132,8 +134,9 @@ function doDraft(){
             if ("" != data.msg){
                 alert(data.msg);
             }
+            //TODO: 결재처리 승인호출
         },
-        // TODO : 중복키 저장으로 오류시 다시저장하는 로직추가 가능한지 (시도는 1번만)
+        //TODO : 중복키 저장으로 오류시 다시저장하는 로직추가 가능한지 (시도는 1번만)
         error: function(e){
             alert(e.status + ":" + e.statusText);
         }
