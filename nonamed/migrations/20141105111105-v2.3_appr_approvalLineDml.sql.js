@@ -9,7 +9,7 @@ module.exports = {
             "VALUES" +
                 "('uid0','money0@nonamed.io','돈영원'," +
                 "NULL,'0',NULL," +
-                "NULL,NULL,'APFN'," +
+                "NULL,NULL,'APDN'," +
                 "NULL,'a8655700-5df2-11e4-9cd0-f7a498a897da')," +
                 "('uid1','money1@nonamed.io','돈일원'," +
                 "NULL,'1',NULL," +
@@ -28,7 +28,7 @@ module.exports = {
             "VALUES" +
                 "('uid3','money0@nonamed.io','돈영원'," +
                 "NULL,'0',NULL," +
-                "NULL,NULL,'APFN'," +
+                "NULL,NULL,'APDN'," +
                 "NULL,'bf466d10-5df2-11e4-9cd0-f7a498a897da')," +
                 "('uid4','money1@nonamed.io','돈일원'," +
                 "NULL,'1',NULL," +

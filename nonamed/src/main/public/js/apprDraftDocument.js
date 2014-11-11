@@ -1,3 +1,4 @@
+BASE_APPROVAL_URL="/approval/";
 BASE_DRAFT_DOCUMENT_URL="/approval/apprDraftDocument/";
 
 $(document).ready(function(){
@@ -6,14 +7,24 @@ $(document).ready(function(){
         history.back();
     });
 
+    initOnClickEvent();
+    initBtn();
+    getDraftDocumentInfo();
+
+    $('#loginUserCode').val("money1@nonamed.io"); //temp
+});
+
+/**
+ * onclick 이벤트 초기화
+ */
+function initOnClickEvent(){
     $("#btnDoDraft").click(function(){doDraft();});
     $("#btnUpdateDraft").click(function(){updateDraft();});
     $("#btnDeleteDraft").click(function(){deleteDraft();});
     $("#btnSetApprovalLine").click(function(){displayApprovalLine();});
-
-    initBtn();
-    getDraftDocumentInfo();
-});
+    $("#btnApprovalDone").click(function(){(manageApproval(APPROVAL_LINE.approverAppCd.done));});
+    $("#btnApprovalWithhold").click(function(){manageApproval(APPROVAL_LINE.approverAppCd.withhold);});
+}
 
 /**
  * 버튼 초기화
@@ -25,12 +36,45 @@ function initBtn(){
             displayElement($("#btnSetApprovalLine"), "show");
             break;
         case "read":
+            displayElement($("#btnApprovalDone"), "show");
+            displayElement($("#btnApprovalWithhold"), "show");
+            displayElement($("#btnUpdateDraft"), "show");   //수정페이지 생성시 삭제
             break;
         case "update":
             displayElement($("#btnUpdateDraft"), "show");
             displayElement($("#btnDeleteDraft"), "show");
             break;
     }
+}
+
+/**
+ * 승인, 보류
+ * @param approverAppCd
+ */
+function manageApproval(approverAppCd){
+    if ('undefined' == typeof(approverAppCd)){approverAppCd = '';}
+
+    var loginUserCode = $('#loginUserCode').val(),
+        docUid = $('#docUid').val();
+
+    var data = {
+        "approverAppCd": approverAppCd,
+        "loginUserCode": loginUserCode,
+        "docUid": docUid
+    };
+
+    $.ajax({
+        type: 'post',
+        url: BASE_APPROVAL_URL + 'doApproval',
+        data: data,
+        dataType: 'json',
+        success: function(data){
+            if ('' != data.msg){alert(data.msg);}
+        },
+        error: function(e){
+            alert(e.status + ':' + e.statusText);
+        }
+    });
 }
 
 /**
@@ -222,19 +266,19 @@ var dataSetApprovalLine =
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
         "approverOrder": "0",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.finish
+        "approverAppCd": APPROVAL_LINE.approverAppCd.done
     },{
         "approvalLineUid": "uid1",
         "approverEmail": "money1@nonamed.io",
         "approverName": "돈일원",
         "approverOrder": "1",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.wait
+        "approverAppCd": APPROVAL_LINE.approverAppCd.wait
     },{
         "approvalLineUid": "uid2",
         "approverEmail": "money2@nonamed.io",
         "approverName": "돈이원",
         "approverOrder": "2",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.none
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     }];
 
 var dataSetApprovalLine2 =
@@ -243,17 +287,17 @@ var dataSetApprovalLine2 =
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
         "approverOrder": "0",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.finish
+        "approverAppCd": APPROVAL_LINE.approverAppCd.done
     },{
         "approvalLineUid": "uid4",
         "approverEmail": "money1@nonamed.io",
         "approverName": "돈일원",
         "approverOrder": "1",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.wait
+        "approverAppCd": APPROVAL_LINE.approverAppCd.wait
     },{
         "approvalLineUid": "uid5",
         "approverEmail": "money2@nonamed.io",
         "approverName": "돈이원",
         "approverOrder": "2",
-        "approverAppCd": approvalNs.APPROVAL_LINE.approverAppCd.none
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     }];

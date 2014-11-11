@@ -28,7 +28,7 @@ module.exports = {
                 approverTypeName : DataTypes.STRING,
 
                 /* 결재자 처리일 */
-                approverPrcDate : DataTypes.STRING,
+                approverPrcDate : DataTypes.DATE,
 
                 /* 결재자 결재코드 */
                 approverAppCd : DataTypes.STRING,

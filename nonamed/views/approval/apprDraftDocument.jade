@@ -28,6 +28,10 @@ block content
               name='btnDeleteDraft', type='button', value='삭제')
             input#btnSetApprovalLine.btn.btn-default.hidden(
               name='btnSetApprovalLine', type='button', value='결재선지정')
+            input#btnApprovalDone.btn.btn-default.hidden(
+              name='btnApprovalDone', type='button', value='승인')
+            input#btnApprovalWithhold.btn.btn-default.hidden(
+              name='btnApprovalWithhold', type='button', value='보류')
 
           input#draftDocumentJson(
             name='draftDocumentJson', type='hidden', value=draftDocumentJson)
@@ -37,5 +41,8 @@ block content
             name='viewStatus', type='hidden', value=viewStatus)
           input#docUid(
             name='docUid', type='hidden')
+          input#loginUserCode(
+            name='loginUserCode', type='hidden')
 
+  script(src='/js/apprNs.js')
   script(src='/js/apprDraftDocument.js')

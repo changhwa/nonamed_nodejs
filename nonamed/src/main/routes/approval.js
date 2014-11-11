@@ -10,6 +10,36 @@ router.get('/', function(req, res) {
     res.render('approval/apprMain', { title: '전자결재' });
 });
 
+/**
+ * 결재처리(열람, 승인, 보류)
+ */
+router.post('/doApproval', function(req, res) {
+    var approverAppCd = req.body.approverAppCd,
+        loginUserCode = req.body.loginUserCode,
+        docUid = req.body.docUid;
+
+    //TODO: 필수값 검증필요
+
+    model.ApprovalLine.find({
+        where: {
+            approverEmail: loginUserCode,
+            docUid: docUid
+        }
+    }).then(function(_approvalLine){
+        _approvalLine.updateAttributes({
+            approverAppCd: approverAppCd,
+            approverPrcDate: new Date()
+        });
+        return _approvalLine;
+    }).then(function(_result){
+        if (_result.error){
+            res.send({msg: "error"});
+        } else {
+            res.send({msg: "success"});
+        }
+    });
+});
+
 router.get('/apprDraftDocument', function(req, res) {
     res.render('approval/apprDraftDocument',{
             title: '기안문 작성',
@@ -80,6 +110,9 @@ router.post('/apprDraftDocument/read', function(req, res){
     });
 });
 
+/**
+ * 결재문서 수정
+ */
 router.post('/apprDraftDocument/update', function(req, res){
     var reqDraftDocument = model.DraftDocument.build({
         docUid: req.body.docUid,
@@ -105,6 +138,9 @@ router.post('/apprDraftDocument/update', function(req, res){
     });
 });
 
+/**
+ * 결재문서 삭제
+ */
 router.post('/apprDraftDocument/delete', function(req, res){
     model.DraftDocument.find({
         where: {docUid: req.body.docUid}
@@ -117,6 +153,9 @@ router.post('/apprDraftDocument/delete', function(req, res){
     });
 });
 
+/**
+ * 결재문서 목록 조회
+ */
 router.post('/apprApprovalList', function(req, res){
     var listType = req.body.listType,
         approverEmail = req.body.loginUserCode,

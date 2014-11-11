@@ -36,7 +36,7 @@ $(document).ready(function(){
 });
 
 function fnForwardDraftDocument(){
-    $('#viewStatus').val('update');
+    $('#viewStatus').val('read');
     $('#approvalListForm').attr({
         action: '/approval/apprDraftDocument/read',
         method: 'post'
