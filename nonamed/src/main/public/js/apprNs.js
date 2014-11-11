@@ -23,6 +23,31 @@ APPROVAL_LINE.approverAppCd = {
     reject: "APRJ"
 };
 
+/**
+ * 결재대기 결재코드목록
+ */
+APPROVAL_LINE.waitApproverAppCdList = [
+    APPROVAL_LINE.approverAppCd.wait,
+    APPROVAL_LINE.approverAppCd.read,
+    APPROVAL_LINE.approverAppCd.withhold
+];
+
+/**
+ * 결재코드값이 결재대기 결재코드목록인지 확인
+ *
+ * @param approverAppCd
+ * @returns {boolean}
+ */
+APPROVAL_LINE.isWaitApproverAppCdList = function(approverAppCd){
+    var waitApproverAppCdList = APPROVAL_LINE.waitApproverAppCdList;
+    for (var i in waitApproverAppCdList){
+        if (waitApproverAppCdList[i] == approverAppCd){
+            return true;
+        }
+    }
+    return false;
+};
+
 var APPROVAL_LIST_TYPE = {
     wait: "wait",
     ongoing: "ongoing",

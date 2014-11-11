@@ -7,11 +7,12 @@ $(document).ready(function(){
         history.back();
     });
 
+    $('#loginUserCode').val("money1@nonamed.io"); //temp
+
     initOnClickEvent();
     initBtn();
     getDraftDocumentInfo();
-
-    $('#loginUserCode').val("money1@nonamed.io"); //temp
+    readDraftDocument();
 });
 
 /**
@@ -48,6 +49,35 @@ function initBtn(){
 }
 
 /**
+ * 결재문서 열람
+ */
+function readDraftDocument() {
+    var loginUserCode = $('#loginUserCode').val();
+    var approvalLineJson = JSON.parse($('#approvalLineJson').val());
+
+    /**
+     * 결재선의 결재코드가 결재대기인 경우
+     * @param approvalLineJson
+     * @returns {*}
+     */
+    var getCurrentApprovalLine = function(approvalLineJson){
+        for(var i in approvalLineJson){
+            if((approvalLineJson[i].approverEmail == loginUserCode)
+                && (APPROVAL_LINE.isWaitApproverAppCdList(approvalLineJson[i].approverAppCd))){
+                return approvalLineJson[i];
+            }
+        }
+        return '';
+    };
+
+    var currentApprovalLine = getCurrentApprovalLine(approvalLineJson);
+
+    if (APPROVAL_LINE.approverAppCd.wait == currentApprovalLine.approverAppCd){
+        manageApproval(APPROVAL_LINE.approverAppCd.read);
+    }
+}
+
+/**
  * 승인, 보류
  * @param approverAppCd
  */
@@ -69,7 +99,9 @@ function manageApproval(approverAppCd){
         data: data,
         dataType: 'json',
         success: function(data){
-            if ('' != data.msg){alert(data.msg);}
+            if ('' != data.msg && APPROVAL_LINE.approverAppCd.read != approverAppCd){
+                alert(data.msg);
+            }
         },
         error: function(e){
             alert(e.status + ':' + e.statusText);

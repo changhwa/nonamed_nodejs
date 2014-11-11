@@ -22,6 +22,11 @@ router.post('/doApproval', function(req, res) {
 
     model.ApprovalLine.find({
         where: {
+            /*
+             * TODO: 조건변경
+             *  1. 삭제 approverEmail (이유: 결재선에 동일인이 2명이상 있을경우 오류발생)
+             *  2. 추가 approverAppCd (이유: 결재대기 결재코드목록인 경우에만 처리, 전제조건은 결재대기에서만 결재처리를 행한다.)
+             */
             approverEmail: loginUserCode,
             docUid: docUid
         }
@@ -161,6 +166,10 @@ router.post('/apprApprovalList', function(req, res){
         approverEmail = req.body.loginUserCode,
         approverAppCd = req.body.approverAppCd,
         conditionObj = {};
+
+    if (-1 < approverAppCd.indexOf(',')){
+        approverAppCd = approverAppCd.split(',');
+    }
 
     switch (listType){
         case (apprNs.APPROVAL_LIST_TYPE.wait):

@@ -33,7 +33,7 @@ var fnForwardList = function(fnSetStatus){
 var fnSetStatusWaitList = function(){
     $('#loginUserCode').val("money1@nonamed.io"); //temp
     $('#listType').val(APPROVAL_LIST_TYPE.wait);
-    $('#approverAppCd').val(APPROVAL_LINE.approverAppCd.wait);
+    $('#approverAppCd').val(APPROVAL_LINE.waitApproverAppCdList);
 };
 
 var fnSetStatusOngoingList = function(){
