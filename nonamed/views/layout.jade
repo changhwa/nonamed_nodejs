@@ -6,11 +6,40 @@ html
     link(rel='stylesheet', href='/stylesheets/breadcrumb.css')
     link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/jquery-ui/themes/smoothness/jquery-ui.min.css')
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
     script(src='/jquery/dist/jquery.min.js')
     script(src='/bootstrap/dist/js/bootstrap.min.js')
     script(src='/jquery-ui/jquery-ui.min.js')
   body
-    block content
+    .nav-side-menu
+      .brand Brand Logo
+      i.fa.fa-bars.fa-3x.toggle-btn(data-toggle="collapse" data-target="#menu-content")
+      .menu-list
+        ul#menu-content.menu-content.collapse.in
+          li
+            a(href="#")
+              i.fa.fa-dashboard.fa-lg
+              | Dashboard
+            li.collapsed(data-toggle="collapse" data-target="#products")
+              a(href="#")
+                i.fa.fa-gift.fa-lg
+                | Products
+                span.arrow
+          ul#products.sub-menu.collapse.out
+            li New Products 1
+            li New Products 2
+            li New Products 3
+          li.collapsed(data-toggle="collapse" data-target="#service")
+            a(href="#")
+              i.fa.fa-globe.fa-lg
+              | Services
+              span.arrow
+          ul#service.sub-menu.collapse.out
+            li New Service 1
+            li New Service 2
+            li New Service 3
+    .container
+      block content
 
 
 
