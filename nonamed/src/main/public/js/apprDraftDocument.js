@@ -25,6 +25,7 @@ function initOnClickEvent(){
     $("#btnSetApprovalLine").click(function(){displayApprovalLine();});
     $("#btnApprovalDone").click(function(){(manageApproval(APPROVAL_LINE.approverAppCd.done));});
     $("#btnApprovalWithhold").click(function(){manageApproval(APPROVAL_LINE.approverAppCd.withhold);});
+    $("#btnApprovalReject").click(function(){manageApproval(APPROVAL_LINE.approverAppCd.reject);});
 }
 
 /**
@@ -40,6 +41,7 @@ function initBtn(){
             displayElement($("#btnApprovalDone"), "show");
             displayElement($("#btnApprovalWithhold"), "show");
             displayElement($("#btnUpdateDraft"), "show");   //수정페이지 생성시 삭제
+            displayElement($("#btnApprovalReject"), "show");
             break;
         case "update":
             displayElement($("#btnUpdateDraft"), "show");
