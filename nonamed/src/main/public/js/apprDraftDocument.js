@@ -7,7 +7,7 @@ $(document).ready(function(){
         history.back();
     });
 
-    $('#loginUserCode').val("money1@nonamed.io"); //temp
+    $('#loginUserCode').val("money0@nonamed.io"); //temp
 
     initOnClickEvent();
     initBtn();
@@ -137,7 +137,11 @@ function doDraft(){
             if ("" != data.msg){
                 alert(data.msg);
             }
-            //TODO: 결재처리 승인호출
+            //TODO: 보완필요
+            if (null != data.draftDocumentJson){
+                $('#docUid').val(data.draftDocumentJson.docUid);
+                manageApproval(APPROVAL_LINE.approverAppCd.done);
+            }
         },
         //TODO : 중복키 저장으로 오류시 다시저장하는 로직추가 가능한지 (시도는 1번만)
         error: function(e){
@@ -300,19 +304,19 @@ function setApprovalLine(){
 
 var dataSetApprovalLine =
     [{
-        "approvalLineUid": "uid0",
+        "approvalLineUid": "uid6",
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
         "approverOrder": "0",
-        "approverAppCd": APPROVAL_LINE.approverAppCd.done
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     },{
-        "approvalLineUid": "uid1",
+        "approvalLineUid": "uid7",
         "approverEmail": "money1@nonamed.io",
         "approverName": "돈일원",
         "approverOrder": "1",
-        "approverAppCd": APPROVAL_LINE.approverAppCd.wait
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     },{
-        "approvalLineUid": "uid2",
+        "approvalLineUid": "uid8",
         "approverEmail": "money2@nonamed.io",
         "approverName": "돈이원",
         "approverOrder": "2",
@@ -321,19 +325,19 @@ var dataSetApprovalLine =
 
 var dataSetApprovalLine2 =
     [{
-        "approvalLineUid": "uid3",
+        "approvalLineUid": "uid9",
         "approverEmail": "money0@nonamed.io",
         "approverName": "돈영원",
         "approverOrder": "0",
-        "approverAppCd": APPROVAL_LINE.approverAppCd.done
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     },{
-        "approvalLineUid": "uid4",
+        "approvalLineUid": "uid10",
         "approverEmail": "money1@nonamed.io",
         "approverName": "돈일원",
         "approverOrder": "1",
-        "approverAppCd": APPROVAL_LINE.approverAppCd.wait
+        "approverAppCd": APPROVAL_LINE.approverAppCd.none
     },{
-        "approvalLineUid": "uid5",
+        "approvalLineUid": "uid11",
         "approverEmail": "money2@nonamed.io",
         "approverName": "돈이원",
         "approverOrder": "2",

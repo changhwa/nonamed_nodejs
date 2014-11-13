@@ -77,7 +77,11 @@ router.post('/apprDraftDocument/create', function(req, res){
                 approvalLineUidArr.push(approvalLineArr[i].approvalLineUid);
             }
             draftDocumentArr[0].setApprovalLine(approvalLineUidArr);
-            res.send({ msg: "create success" });
+
+            res.send({
+                msg: "create success",
+                draftDocumentJson: draftDocumentArr[0].dataValues
+            });
         })
         .error(function(errors) {
             if (0 < errors.length){
