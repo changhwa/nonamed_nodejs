@@ -51,9 +51,10 @@ function initBtn(){
 }
 
 /**
- * 결재문서 열람
+ * 결재문서 열람(로그인한 사용자가 열람하지 않았을 경우에만 실행)
  */
 function readDraftDocument() {
+    if ('' == $('#approvalLineJson').val()){return;};
     var loginUserCode = $('#loginUserCode').val();
     var approvalLineJson = JSON.parse($('#approvalLineJson').val());
 
