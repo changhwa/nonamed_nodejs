@@ -9,7 +9,9 @@ module.exports  = function(sequelize, DataTypes) {
             primaryKey: true
         },
         subject: DataTypes.STRING,
-        contents : DataTypes.STRING
+        contents: DataTypes.STRING,
+        distributionType: DataTypes.STRING,
+        docStatus: DataTypes.STRING
     },{
         underscored: true,
         timestamps: false,

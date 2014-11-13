@@ -8,7 +8,9 @@ module.exports = {
                     primaryKey: true
                 },
                 subject: DataTypes.STRING,
-                contents : DataTypes.STRING
+                contents : DataTypes.STRING,
+                distributionType: DataTypes.STRING,
+                docStatus: DataTypes.STRING
             },
             {
                 charset: 'utf8'
