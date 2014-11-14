@@ -281,8 +281,8 @@ function displayElement(id, mode){
 
 function displayApprovalLine(){
     //TODO: 결재선 div 호출
-
-    setApprovalLine();
+    window.open('/depts?mode=app', '_blank',"width=400,height=600");
+    //setApprovalLine();
 }
 
 function setApprovalLine(){

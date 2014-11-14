@@ -8,10 +8,10 @@ block content
             h3.page-header Login
           .form-group
             label.control-label 사원번호
-            input.form-control(type="text" id="code" name="code")
+            input.form-control(type="text" id="code" name="code" value="ea11111111")
           .form-group
             label.control-label Password
-            input.form-control(type="password" id="passwd" name="passwd")
+            input.form-control(type="password" id="passwd" name="passwd" value="1234")
           .text-center
             a#login_btn.btn.btn-primary(href="#") Sign in
   script(type="text/javascript").
@@ -33,7 +33,7 @@ block content
             success:function(args){
                 alert(args.msg);
                 if(args.loginYn){
-                    location.href="/";
+                    location.href="/approval/apprDraftDocument";
                 } else {
                     $code.val('');
                     $passwd.val('');

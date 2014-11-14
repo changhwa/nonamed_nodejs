@@ -74,6 +74,11 @@ block content
   input#orgUserCode(type='hidden', name='orgUserCode')
   input#orgUserName(type='hidden', name='orgUserName')
 
+  if mode == 'app'
+    div
+      ul#selectedList.list-group
+
+
   script(src='/js/orgTree.js')
   script(type='text/javascript').
     $(document).ready(

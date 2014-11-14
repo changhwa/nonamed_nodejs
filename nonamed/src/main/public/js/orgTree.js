@@ -15,6 +15,10 @@ var Organization = (function() {
             .on('click','li[name=_user]',function(){
                 $("#orgUserCode").val($(this).data("deptCode"));
                 $("#orgUserName").val($(this).text());
+            })
+            .on('dblclick','li[name=_user]',function(){
+                var that = $(this);
+                setUser(that);
             });
         $("#breadcrumb").on('click','a[name=breadcrumb_nav_btn]',function(){
             moveBreadCrumbLink($(this).index());
@@ -188,6 +192,11 @@ var Organization = (function() {
 
     var isEdit = function(){
         return $("#mode").val() ==='edit';
+    };
+
+    var setUser = function(that){
+        var template = "<li>" + that.text() + "</li>";
+        $("#selectedList").append(template);
     };
 
     return  {
