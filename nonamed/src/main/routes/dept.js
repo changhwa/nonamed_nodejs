@@ -5,16 +5,18 @@ var uuid = require('node-uuid');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('organization/org_tree', { mode: 'view' });
+    res.render('organization/org_tree', { mode: (req.query.mode !== undefined) ? req.query.mode : 'view' });
 });
 
 router.get('/tree', function(req,res){
     var organTree = {};
+    var deptCode = (req.session.user !== undefined
+        && req.query.deptCode == 0) ? req.session.user.Departments[0].code : req.query.deptCode;
     model.Department.findAll({
-        where: { parent_dept_code: req.query.deptCode }, order: 'code'
+        where: { parent_dept_code: deptCode }, order: 'code'
     }).then(function(dept) {
         organTree.dept = dept;
-        return model.Department.find((req.query.deptCode == 0) ? 1 : req.query.deptCode);
+        return model.Department.find((deptCode == 0) ? 1 : deptCode);
     }).then(function(result) {
         return result.getUsers();
     }).then(function(user){
@@ -24,7 +26,9 @@ router.get('/tree', function(req,res){
 });
 
 router.get('/breadcrumbs', function(req,res){
-    model.Department.find(req.query.deptCode).then(function(dept){
+    var deptCode = (req.session.user !== undefined
+        && req.query.deptCode == 0) ? req.session.user.Departments[0].code : req.query.deptCode;
+    model.Department.find(deptCode).then(function(dept){
         if(dept != null){
             var path = dept.dataValues.path;
             var pathArr = path.split('/');
