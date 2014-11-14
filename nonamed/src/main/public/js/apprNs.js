@@ -36,6 +36,7 @@ DRAFT_DOCUMENT.distributionType = {
  *  reject: 반려
  *  withdraw: 회수
  *  writing: 작성중
+ *  draftWait: 기안
  */
 //TODO: private로 변경
 APPROVAL_COMMON.approvalCode = {
@@ -51,23 +52,13 @@ APPROVAL_COMMON.approvalCode = {
     discard: 'APDC',
     reject: 'APRJ',
     withdraw: 'APWD',
-    writing: 'APWR'
+    writing: 'APWR',
+    draftWait: 'APDW',
+    draftDone: 'APDD'
 };
 
 APPROVAL_COMMON.approvalCodeName = {
-    none: 'APNN',
-    finish: 'APFN',
-    approving: {
-        value: 'APIG',
-        wait: 'APWT',
-        read: 'APRD',
-        withhold: 'APWH',
-        done: 'APDN'
-    },
-    discard: 'APDC',
-    reject: 'APRJ',
-    withdraw: 'APWD',
-    writing: 'APWR'
+    none: 'APNN'
 };
 
 /**
@@ -122,7 +113,9 @@ APPROVAL_LINE.approverAppCd = {
     withhold: APPROVAL_COMMON.approvalCode.approving.withhold,
     reject: APPROVAL_COMMON.approvalCode.reject,
     withdraw: APPROVAL_COMMON.approvalCode.withdraw,
-    writing: APPROVAL_COMMON.approvalCode.writing
+    writing: APPROVAL_COMMON.approvalCode.writing,
+    draftWait: APPROVAL_COMMON.approvalCode.draftWait,
+    draftDone: APPROVAL_COMMON.approvalCode.draftDone
 };
 
 /**
